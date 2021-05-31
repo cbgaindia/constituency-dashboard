@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 
 import { TopojsonData } from "../../Data/StatesTopojson";
-import { statesTopojson } from "../../Data/IndiaStates";
+//import { statesTopojson } from "../../Data/IndiaStates";
+import { statesTopojson } from "../../Data/ac_orissa_topo";
 // import { statesTopojson } from "../../Data/IndiaStates (1)";
 import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from "react-leaflet";
 // import 'bootstrap/dist/css/bootstrap.css';
@@ -10,16 +11,16 @@ import * as topojson from "topojson-client";
 let config = {};
 
 config.params = {
-  center: [23.59, 81.96],
+  center: [20.94, 84.80],
   zoomControl: true,
-  zoom: 4,
-  maxZoom: 5,
+  zoom: 7,
+  maxZoom: 10,
   minZoom: 4,
   scrollwheel: false,
   legends: true,
   infoControl: true,
   attributionControl: true,
-  dragging: false,
+  dragging: true,
 };
 
 config.tileLayer = {
@@ -190,7 +191,7 @@ export default class Choropleth extends Component {
     );
     let newGeoJsonData = new topojson.feature(
       statesTopojson,
-      statesTopojson.objects.IndiaStates
+      statesTopojson.objects.AC_Orissa
     );
     let record = this.props.data.record_figures;
     let budgetAttr = this.props.budgetAttr;
@@ -198,12 +199,12 @@ export default class Choropleth extends Component {
 
     MappedFigures = newGeoJsonData.features.map((state, index) => {
       for (let variable in state.properties) {
-        if (variable !== "ST_NM") {
+        if (variable !== "AC_NAME") {
           delete state.properties[variable];
         }
       }
       const stateCode = Object.keys(this.props.stateCodes).find(
-        (code) => this.props.stateCodes[code] === state.properties.ST_NM
+        (code) => this.props.stateCodes[code] === state.properties.AC_NAME
       );
       if (stateCode !== null) {
         let fiscalYears = Object.keys(this.props.schemeData.fiscal_year);
@@ -341,7 +342,7 @@ export default class Choropleth extends Component {
   setToolTipContent(values) {
     this.setState({
       // hoverstate: values.feature.properties.NAME_1,
-      hoverstate: values.feature.properties.ST_NM,
+      hoverstate: values.feature.properties.AC_NAME,
       hoverFigure: values.feature.properties[this.state.selectedYear],
     });
   }

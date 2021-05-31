@@ -23,7 +23,7 @@ const schemeLogos = {
     scheme_02 : icds,
     scheme_03 : sg,
     scheme_04 : pmgsy,
-    scheme_05 : mgnrega,
+    scheme_1 : mgnrega,
     scheme_06 : smsa,
     scheme_07 : bbbp,
     scheme_08 : mdm,
