@@ -4,8 +4,8 @@ Installation
 
 ```
 # Clone Repository
-$ git clone https://github.com/cbgaindia/schemes-dashboard.git
-$ cd schemes-dashboard
+$ git clone https://github.com/cbgaindia/constituency-dashboard.git
+$ cd constituency-dashboard
 
 # Install all dependencies
 $ npm install
