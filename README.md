@@ -1,4 +1,4 @@
-# Schemes Dashboard
+# Constituency Dashboard
 
 Installation
 
