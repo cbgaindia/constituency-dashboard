@@ -12,7 +12,8 @@ import SchemeCard from "../SchemesCard";
 
 import { receipts_data as data } from "../../Data/receipts_data";
 //import schemesData from "../../Data/schemes.json";
-import schemesData from "../../Data/local_schemes.json";
+//import schemesData from "../../Data/local_schemes.json";
+import schemesData from "../../Data/ac_schemes.json";
 import { statesTopojson } from "../../Data/ac_orissa_topo";
 import { recentDevelopmentsData } from "../../Data/schemeNews";
 import schemeLogos from "../../Data/schemesLogos"
@@ -103,6 +104,20 @@ const SchemeDashboard = (props) => {
     }));
     setRelatedSchemes(relatedSchemes);
 
+    // Setting Recent Developments Data
+    const recentDevelopmentsArray = [];
+    while (
+      recentDevelopmentsData[reverseSchemeSlugs[scheme_slug]].metadata.news
+        .length
+    ) {
+      recentDevelopmentsArray.push(
+        recentDevelopmentsData[
+          reverseSchemeSlugs[scheme_slug]
+        ].metadata.news.splice(0, 2)
+      );
+    }
+    setRecentDevelopmentsData(recentDevelopmentsArray);
+    console.log("testing recent dvelopments", recentDevelopmentsArray);
 
   }, []);
 

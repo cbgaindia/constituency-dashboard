@@ -3,7 +3,8 @@ import {Helmet} from 'react-helmet';
 import SchemesCard from "../SchemesCard";
 
 //import schemesData from "../../Data/schemes.json";
-import schemesData from "../../Data/local_schemes.json";
+//import schemesData from "../../Data/local_schemes.json";
+import schemesData from "../../Data/ac_schemes.json";
 import schemeLogos from "../../Data/schemesLogos"
 
 import RightCaret from "../../Images/arrow/right.svg"
@@ -39,7 +40,7 @@ const SchemesDashboardHomepage = (props) => {
     let schemes = Object.keys(schemesData).map((scheme, index) => (
       {
       title: schemesData[scheme].metadata.name, 
-      link: `/scheme/${schemesData[scheme].metadata.slug}/${schemesData[scheme].data['indicator_1'].slug}`, 
+      link: `/scheme/${schemesData[scheme].metadata.slug}/${schemesData[scheme].data['indicator_01'].slug}`, 
       class: "mt-4", 
       img: schemeLogos[scheme]
       }
