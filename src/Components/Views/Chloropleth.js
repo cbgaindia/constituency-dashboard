@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 
 import { TopojsonData } from "../../Data/StatesTopojson";
-//import { statesTopojson } from "../../Data/IndiaStates";
-//import { statesTopojson } from "../../Data/ac_orissa_topo";
 import { acTopojson } from "../../Data/ac_orissa_topo";
 import { pcTopojson } from "../../Data/pc_orissa_topo";
-// import { statesTopojson } from "../../Data/IndiaStates (1)";
 import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from "react-leaflet";
-// import 'bootstrap/dist/css/bootstrap.css';
 import * as topojson from "topojson-client";
 
 let config = {};

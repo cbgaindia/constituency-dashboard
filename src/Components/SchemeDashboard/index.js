@@ -11,13 +11,9 @@ import NewsCard from "../NewsCard";
 import SchemeCard from "../SchemesCard";
 
 import { receipts_data as data } from "../../Data/receipts_data";
-//import schemesData from "../../Data/schemes.json";
-//import schemesData from "../../Data/local_schemes.json";
 import schemesData from "../../Data/ac_schemes.json";
-//import { statesTopojson } from "../../Data/ac_orissa_topo";
 import { acTopojson } from "../../Data/ac_orissa_topo";
 import { pcTopojson } from "../../Data/pc_orissa_topo";
-//import { recentDevelopmentsData } from "../../Data/schemeNews";
 import  recentDevelopmentsData  from "../../Data/schemeNews.json";
 import schemeLogos from "../../Data/schemesLogos"
 
@@ -49,13 +45,6 @@ const newsData = [
   ],
 ];
 
-// const relatedSchemes = [
-//   { title: "National Health Mission", link: "", class: "", img: "" },
-//   { title: "National Health Mission", link: "", class: "ml-4", img: "" },
-//   { title: "National Health Mission", link: "", class: "ml-4", img: "" },
-//   { title: "National Health Mission", link: "", class: "ml-4", img: "" },
-// ];
-
 const acCodes = acTopojson.objects.Geo.geometries.reduce((result,geometry) => {
 		result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
 		return result;}, {});
@@ -71,10 +60,8 @@ const SchemeDashboard = (props) => {
   const [isac, setIsac] = useState(true);
   const [stateCodes, setstateCodes] = useState( isac ? acCodes : pcCodes) ;
   const handleChangeloc = () => {
-                alert(isac);
                 setstateCodes(!isac ? acCodes : pcCodes);
 		setIsac(!isac);
-                console.log(stateCodes)
 		};
 
 

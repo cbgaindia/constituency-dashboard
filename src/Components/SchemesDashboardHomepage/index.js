@@ -83,16 +83,16 @@ const SchemesDashboardHomepage = (props) => {
   return (
     <>	
     <Helmet>
-        <title> Schemes Dashboard | Open Budgets India </title>
-        <meta name="title" content="Schemes Dashboard | Open Budgets India"/>
+        <title> Constituency Dashboard | Open Budgets India </title>
+        <meta name="title" content="Constituency Dashboard | Open Budgets India"/>
         <meta property="og:url" content="https://schemes.openbudgetsindia.org/"/>
-        <meta property="og:title" content="Schemes Dashboard | Open Budgets India"/>
+        <meta property="og:title" content="Constituency Dashboard | Open Budgets India"/>
         <meta property="twitter:url" content="https://schemes.openbudgetsindia.org/"/>
-        <meta property="twitter:title" content="Schemes Dashboard | Open Budgets India"/>
+        <meta property="twitter:title" content="Constituency Dashboard | Open Budgets India"/>
     </Helmet>
 
     <div className="layout-wrapper pt-5">
-      <h1 className="page-heading text-dark pl-3 mb-2">Schemes Dashboard</h1>
+      <h1 className="page-heading text-dark pl-3 mb-2">Constituency Dashboard</h1>
       <div className="horizontal-seperator mt-3 mb-1"></div>
       {/* <div className="radio-toolbar-container mt-3">
         {

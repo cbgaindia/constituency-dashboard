@@ -27,3 +27,16 @@
 .right-curved-border{
     border-radius: 0px 8px 8px 0px !important;      
 }
+
+.viz-controls-container{
+    display:flex;
+    justify-content:space-between;
+}
+
+.btn-secondary{
+    background: white;
+    height: 34px;
+    width: 100px;
+    color: #4B4797;
+    margin-right:10px;
+}
