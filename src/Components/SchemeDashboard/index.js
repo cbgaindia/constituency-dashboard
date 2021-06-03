@@ -14,7 +14,9 @@ import { receipts_data as data } from "../../Data/receipts_data";
 //import schemesData from "../../Data/schemes.json";
 //import schemesData from "../../Data/local_schemes.json";
 import schemesData from "../../Data/ac_schemes.json";
-import { statesTopojson } from "../../Data/ac_orissa_topo";
+//import { statesTopojson } from "../../Data/ac_orissa_topo";
+import { acTopojson } from "../../Data/ac_orissa_topo";
+import { pcTopojson } from "../../Data/pc_orissa_topo";
 //import { recentDevelopmentsData } from "../../Data/schemeNews";
 import  recentDevelopmentsData  from "../../Data/schemeNews.json";
 import schemeLogos from "../../Data/schemesLogos"
@@ -54,15 +56,28 @@ const newsData = [
 //   { title: "National Health Mission", link: "", class: "ml-4", img: "" },
 // ];
 
-const stateCodes = statesTopojson.objects.AC_Orissa.geometries.reduce((result,geometry) => {
-	result[geometry.properties.AC_NO] = geometry.properties.AC_NAME;
-        return result;
-     }, {});
+const acCodes = acTopojson.objects.Geo.geometries.reduce((result,geometry) => {
+		result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+		return result;}, {});
 
-console.log(stateCodes);
+const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result,geometry) => {
+		result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+		return result;}, {});
+
 
 
 const SchemeDashboard = (props) => {
+
+  const [isac, setIsac] = useState(true);
+  const [stateCodes, setstateCodes] = useState( isac ? acCodes : pcCodes) ;
+  const handleChangeloc = () => {
+                alert(isac);
+                setstateCodes(!isac ? acCodes : pcCodes);
+		setIsac(!isac);
+                console.log(stateCodes)
+		};
+
+
   const { scheme_slug, indicator_slug } = useParams();
   const reverseSchemeSlugs = {};
   Object.keys(schemesData).forEach((scheme) => {
@@ -121,6 +136,7 @@ const SchemeDashboard = (props) => {
     console.log("testing recent dvelopments", recentDevelopmentsArray);
 
   }, []);
+
 
   const handleChangeViz = (type) => {
     setShowViz(true);
@@ -187,6 +203,8 @@ const SchemeDashboard = (props) => {
         <DatavizViewControls
           view={activeViz}
           handleChangeViz={handleChangeViz}
+          isac={isac}
+          handleChangeloc={handleChangeloc}
         />
         <div className="scheme-details-view-wrapper mt-3 ">
           <IndicatorSelector
@@ -204,6 +222,8 @@ const SchemeDashboard = (props) => {
             activeYear={activeYear}
             stateCodes={stateCodes}
             setYearChange={setYearChange}
+            isac={isac}
+            key={isac}
           />
         </div>
       </div>

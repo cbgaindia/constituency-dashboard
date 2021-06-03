@@ -2,13 +2,16 @@ import React, { Component } from "react";
 
 import { TopojsonData } from "../../Data/StatesTopojson";
 //import { statesTopojson } from "../../Data/IndiaStates";
-import { statesTopojson } from "../../Data/ac_orissa_topo";
+//import { statesTopojson } from "../../Data/ac_orissa_topo";
+import { acTopojson } from "../../Data/ac_orissa_topo";
+import { pcTopojson } from "../../Data/pc_orissa_topo";
 // import { statesTopojson } from "../../Data/IndiaStates (1)";
 import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from "react-leaflet";
 // import 'bootstrap/dist/css/bootstrap.css';
 import * as topojson from "topojson-client";
 
 let config = {};
+
 
 config.params = {
   center: [20.94, 84.80],
@@ -53,6 +56,7 @@ export default class Choropleth extends Component {
       bandFigures: null,
     };
 
+    
     this.computeBands = this.computeBands.bind(this);
     this.mungeData = this.mungeData.bind(this);
     this.getYearList = this.getYearList.bind(this);
@@ -67,6 +71,7 @@ export default class Choropleth extends Component {
 
     this.geojson = React.createRef(null);
   }
+ 
 
   componentDidMount() {
     let MappedFigures = this.mungeData();
@@ -185,13 +190,14 @@ export default class Choropleth extends Component {
   }
 
   mungeData() {
+    let statesTopojson = this.props.isac ? acTopojson : pcTopojson;
     let GeoJSONData = new topojson.feature(
       TopojsonData,
       TopojsonData.objects.india_state_boundaries
     );
     let newGeoJsonData = new topojson.feature(
       statesTopojson,
-      statesTopojson.objects.AC_Orissa
+      statesTopojson.objects.Geo
     );
     let record = this.props.data.record_figures;
     let budgetAttr = this.props.budgetAttr;
@@ -199,12 +205,12 @@ export default class Choropleth extends Component {
 
     MappedFigures = newGeoJsonData.features.map((state, index) => {
       for (let variable in state.properties) {
-        if (variable !== "AC_NAME") {
+        if (variable !== "GEO_NAME") {
           delete state.properties[variable];
         }
       }
       const stateCode = Object.keys(this.props.stateCodes).find(
-        (code) => this.props.stateCodes[code] === state.properties.AC_NAME
+        (code) => this.props.stateCodes[code] === state.properties.GEO_NAME
       );
       if (stateCode !== null) {
         let fiscalYears = Object.keys(this.props.schemeData.fiscal_year);
@@ -342,7 +348,7 @@ export default class Choropleth extends Component {
   setToolTipContent(values) {
     this.setState({
       // hoverstate: values.feature.properties.NAME_1,
-      hoverstate: values.feature.properties.AC_NAME,
+      hoverstate: values.feature.properties.GEO_NAME,
       hoverFigure: values.feature.properties[this.state.selectedYear],
     });
   }

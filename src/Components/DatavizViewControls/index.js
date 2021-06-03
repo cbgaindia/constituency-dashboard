@@ -122,9 +122,17 @@ const DatavizViewControls = (props) => {
     console.log("testing value", e.target.value);
     setVizView(e.target.value);
   };
+
+  
   return (
     <div className="viz-controls-container">
       <div class="radio-toolbar d-flex justify-content-end">
+
+	  <div style={{alignSelf:'left', marginBottom: '1rem'}}>
+		<button className="btn btn-secondary" style={props.isac == true? {background:'#111352', color:'#A7E3E7'} : {}} onClick={props.handleChangeloc}> <i className="fa fa-table" aria-hidden="true"></i>AC</button>
+	        <button className="btn btn-secondary" style={props.isac == false? {background:'#111352', color:'#A7E3E7'} : {}} onClick={props.handleChangeloc}> <i className="fa fa-map" aria-hidden="true"></i>PC</button>
+	  </div>
+
         {radioButtons.map((radio) => (
           <Fragment>
             <input
