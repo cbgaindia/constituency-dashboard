@@ -11,7 +11,8 @@ import NewsCard from "../NewsCard";
 import SchemeCard from "../SchemesCard";
 
 import { receipts_data as data } from "../../Data/receipts_data";
-import schemesData from "../../Data/ac_schemes.json";
+import acData from "../../Data/ac_schemes.json";
+import pcData from "../../Data/pc_schemes.json";
 import { acTopojson } from "../../Data/ac_orissa_topo";
 import { pcTopojson } from "../../Data/pc_orissa_topo";
 import  recentDevelopmentsData  from "../../Data/schemeNews.json";
@@ -58,11 +59,8 @@ const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result,geometry) => {
 const SchemeDashboard = (props) => {
 
   const [isac, setIsac] = useState(true);
-  const [stateCodes, setstateCodes] = useState( isac ? acCodes : pcCodes) ;
-  const handleChangeloc = () => {
-                setstateCodes(!isac ? acCodes : pcCodes);
-		setIsac(!isac);
-		};
+  const [stateCodes, setstateCodes]   = useState( isac ? acCodes : pcCodes) ;
+  const [schemesData, setSchemesData] = useState( isac ? acData : pcData) ;
 
 
   const { scheme_slug, indicator_slug } = useParams();
@@ -84,11 +82,28 @@ const SchemeDashboard = (props) => {
   const [activeViz, setActiveViz] = useState("map");
   const [schemeData, setSchemeData] = useState(
     schemesData[reverseSchemeSlugs[scheme_slug]]
-  );
+  ); 
   const [relatedSchemes, setRelatedSchemes] = useState([]);
   const [activeIndicator, setActiveIndicator] = useState(indicator);
   const [activeYear, setActiveYear] = useState("2019-20");
   const [recentDevelopments, setRecentDevelopmentsData] = useState([]);
+
+  const handleChangeloc = () => {
+	setIsac(!isac);
+	};
+
+  useEffect(() => {
+
+        setstateCodes(isac ? acCodes : pcCodes);
+        setSchemesData(isac ? acData : pcData);
+
+  },[isac]);
+
+  useEffect(() => {
+
+        setSchemeData(schemesData[reverseSchemeSlugs[scheme_slug]]);
+
+  },[schemesData]);
 
   useEffect(() => {
     // Setting Related Schemes Data
