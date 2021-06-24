@@ -4,7 +4,8 @@ import SchemesCard from "../SchemesCard";
 
 //import schemesData from "../../Data/schemes.json";
 //import schemesData from "../../Data/local_schemes.json";
-import schemesData from "../../Data/ac_schemes.json";
+import ac_schemesData from "../../Data/ac_schemes.json";
+import pc_schemesData from "../../Data/ac_schemes.json";
 import schemeLogos from "../../Data/schemesLogos"
 
 import RightCaret from "../../Images/arrow/right.svg"
@@ -37,15 +38,32 @@ const SchemesDashboardHomepage = (props) => {
 
   useEffect(() => {
     console.log('testing scheme slugs', props.schemeSlugs)
-    let schemes = Object.keys(schemesData).map((scheme, index) => (
+    let ac_schemes = Object.keys(ac_schemesData).map((scheme, index) => (
       {
-      title: schemesData[scheme].metadata.name, 
-      link: `/scheme/${schemesData[scheme].metadata.slug}/${schemesData[scheme].data['indicator_01'].slug}`, 
+      title: ac_schemesData[scheme].metadata.name, 
+      link: `/scheme/${ac_schemesData[scheme].metadata.slug}/${ac_schemesData[scheme].data['indicator_01'].slug}`, 
       class: "mt-4", 
       img: schemeLogos[scheme]
       }
       ))
-      schemes.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()))
+      ac_schemes.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()))
+
+    console.log('testing scheme slugs', props.schemeSlugs)
+    let pc_schemes = Object.keys(pc_schemesData).map((scheme, index) => (
+      {
+      title: pc_schemesData[scheme].metadata.name, 
+      link: `/scheme/${pc_schemesData[scheme].metadata.slug}/${pc_schemesData[scheme].data['indicator_01'].slug}`, 
+      class: "mt-4", 
+      img: schemeLogos[scheme]
+      }
+      ))
+      pc_schemes.sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()))
+
+
+    let schemes = ac_schemes.concat(pc_schemes).filter(function(o) {  
+	  return this[o.link] ? false : this[o.link] = true;
+	}, {});
+
     setSchemes(schemes)
 
     // generateSitemap(schemesData)

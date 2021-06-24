@@ -58,13 +58,18 @@ const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result,geometry) => {
 
 const SchemeDashboard = (props) => {
 
-  const [isac, setIsac] = useState(true);
+
+  const { scheme_slug, indicator_slug } = useParams();
+  const reverseSchemeSlugs = {};
+
+  const scheme_key  = "scheme_".concat(scheme_slug); 
+  const scheme_data = scheme_key in acData ? (scheme_key in pcData ? "both" : "ac") : "pc" ;
+  const [isac, setIsac] = useState(["both", "ac"].includes(scheme_data)  ? true : false );
+
   const [stateCodes, setstateCodes]   = useState( isac ? acCodes : pcCodes) ;
   const [schemesData, setSchemesData] = useState( isac ? acData : pcData) ;
 
 
-  const { scheme_slug, indicator_slug } = useParams();
-  const reverseSchemeSlugs = {};
   Object.keys(schemesData).forEach((scheme) => {
     reverseSchemeSlugs[schemesData[scheme].metadata.slug] = scheme;
   });
