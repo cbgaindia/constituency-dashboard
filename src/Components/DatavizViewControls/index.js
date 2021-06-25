@@ -128,8 +128,8 @@ const DatavizViewControls = (props) => {
     <div className="viz-controls-container">
 
       <div style={{alignSelf:'left'}}>
-		<button className="btn btn-secondary" style={props.isac == true? {background:'#4B4797', color:'white'} : {}} onClick={props.handleChangeloc}>AC</button>
-	        <button className="btn btn-secondary" style={props.isac == false? {background:'#4B4797', color:'white'} : {}} onClick={props.handleChangeloc}>PC</button>
+		<button className="btn btn-secondary" style={props.isac == true? {background:'#4B4797', color:'white'} : {}} onClick={() => props.handleChangeloc(true)}>AC</button>
+	        <button className="btn btn-secondary" style={props.isac == false? {background:'#4B4797', color:'white'} : {}} onClick={() => props.handleChangeloc(false)}>PC</button>
       </div>
 
       <div class="radio-toolbar d-flex justify-content-end">

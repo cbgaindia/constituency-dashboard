@@ -93,9 +93,6 @@ const SchemeDashboard = (props) => {
   const [activeYear, setActiveYear] = useState("2019-20");
   const [recentDevelopments, setRecentDevelopmentsData] = useState([]);
 
-  const handleChangeloc = () => {
-	setIsac(!isac);
-	};
 
   useEffect(() => {
 
@@ -144,6 +141,10 @@ const SchemeDashboard = (props) => {
 
   }, []);
 
+  const handleChangeloc = (value) => {
+        console.log(value);
+	setIsac(value);
+	};
 
   const handleChangeViz = (type) => {
     setShowViz(true);
