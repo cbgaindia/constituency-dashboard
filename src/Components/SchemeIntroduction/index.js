@@ -12,11 +12,13 @@ const socialMediaLinks = [
     link: "https://www.facebook.com/OpenBudgetsIndia",
     class: "link ml-12",
     child: <FacebookIcon fill="#95989D" />,
+    share: 'https://www.facebook.com/sharer/sharer.php?u='
   },
   {
     link: "https://twitter.com/OpenBudgetsIn",
     class: "link ml-12",
     child: <TwitterIcon fill="#95989D" />,
+    share: 'https://twitter.com/intent/tweet?text=Share on twitter&url='
   },
 ];
 
@@ -38,7 +40,7 @@ const SchemeIntroduction = (props) => {
         <h1 className="page-heading text-dark">
           {props.data && props.data.name}
         </h1>
-        <div>
+        {/* <div>
           <button className="button primary-button" onClick={() => handleToggleDropdown(!dropdownActive)}>
             <span>Download</span>
             <img className="button-caret-down" src={caretDown} alt="icon" />
@@ -49,7 +51,7 @@ const SchemeIntroduction = (props) => {
             <Dropdown handleDownloadReportImage={props.handleDownloadReportImage} showViz={props.showViz}/>
             : null            
           }
-        </div>
+        </div> */}
       </div>
       <p className="page-introduction-text mb-1">{props.data.description}</p>
       <div className="scheme-types-wrapper mt-3 d-flex align-items-center">
@@ -69,7 +71,7 @@ const SchemeIntroduction = (props) => {
           <p className="page-introduction-text">Share on social media:</p>
           <div class="social-media-links">
             {socialMediaLinks.map((link) => (
-              <a className={link.class} href={link.link} target="_blank">
+              <a href="javascript:void(0)" className={link.class} onClick={() => window.open(link.share+encodeURIComponent(window.location.href))}>
                 {link.child}
               </a>
             ))}

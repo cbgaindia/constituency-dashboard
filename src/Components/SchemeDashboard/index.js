@@ -213,6 +213,8 @@ const SchemeDashboard = (props) => {
           handleChangeViz={handleChangeViz}
           isac={isac}
           handleChangeloc={handleChangeloc}
+          handleDownloadReportImage={handleDownloadReportImage} 
+          showViz={showViz}
         />
         <div className="scheme-details-view-wrapper mt-3 ">
           <IndicatorSelector

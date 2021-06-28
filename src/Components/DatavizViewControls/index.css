@@ -41,3 +41,13 @@
     margin-right:10px;
     font-size: 12px;
 }
+
+.btn-viz-download{
+    background: #672448;
+    height: 34px;
+    width: 150px;
+    color: white;
+    margin-right:10px;
+    font-size: 12px;
+    border-color: #672448;
+}

@@ -1,4 +1,6 @@
 import React, { useState, Fragment } from "react";
+import Dropdown from "../Dropdown";
+import caretDown from "../../Images/arrow/caret-down-white2.svg";
 
 import "./index.css";
 
@@ -116,6 +118,14 @@ const radioButtons = [
 ];
 
 const DatavizViewControls = (props) => {
+
+  const [dropdownActive, setDropdownActive] = useState(false)
+
+  const handleToggleDropdown = (val) => {
+    setDropdownActive(val)
+  }
+
+
   const [vizView, setVizView] = useState("map");
 
   const handleChangeVizView = (e) => {
@@ -130,6 +140,19 @@ const DatavizViewControls = (props) => {
       <div style={{alignSelf:'left'}}>
 		<button className="btn btn-secondary" style={props.isac == true? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(true)}>Vidhan sabha</button>
 	        <button className="btn btn-secondary" style={props.isac == false? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(false)}>Lok Sabha</button>
+      </div>
+
+      <div>
+          <button className="btn btn-viz-download" onClick={() => handleToggleDropdown(!dropdownActive)}>
+            <span>Download</span>
+            <img className="button-caret-down" src={caretDown} alt="icon" />
+          </button>
+          {
+            dropdownActive
+            ?
+            <Dropdown handleDownloadReportImage={props.handleDownloadReportImage} showViz={props.showViz}/>
+            : null            
+          }
       </div>
 
       <div class="radio-toolbar d-flex justify-content-end">

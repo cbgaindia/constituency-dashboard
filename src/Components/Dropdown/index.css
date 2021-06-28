@@ -3,7 +3,7 @@
     background: #ffffff;
     border-radius: 12px;
     position: absolute;
-    top: 110px;
+    /* top: 110px; */
     box-shadow: 0px 4px 12px 0px rgba(0,0,0,0.04);
     z-index: 0;
 }
@@ -23,12 +23,12 @@
 .scheme-dropdown-item{
     display: block;
     padding: 12px 24px !important;
-    color: #4B4797;
+    color: #672448;
     text-decoration: underline;
     cursor: pointer;
 }
 .scheme-dropdown-item:hover{
-    color: #4B4797;
+    color: #672448;
 }
 .scheme-dropdown-item.first{
     border-top-left-radius: 12px;
