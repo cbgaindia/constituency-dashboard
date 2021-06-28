@@ -213,6 +213,7 @@ const SchemeDashboard = (props) => {
           handleChangeViz={handleChangeViz}
           isac={isac}
           handleChangeloc={handleChangeloc}
+          scheme_data={scheme_data}
           handleDownloadReportImage={handleDownloadReportImage} 
           showViz={showViz}
         />

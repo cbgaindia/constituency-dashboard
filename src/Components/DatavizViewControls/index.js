@@ -138,22 +138,10 @@ const DatavizViewControls = (props) => {
     <div className="viz-controls-container">
 
       <div style={{alignSelf:'left'}}>
-		<button className="btn btn-secondary" style={props.isac == true? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(true)}>Vidhan sabha</button>
-	        <button className="btn btn-secondary" style={props.isac == false? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(false)}>Lok Sabha</button>
+		{["both", "ac"].includes(props.scheme_data) && (<button className="btn-geo-opt" style={props.isac == true? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(true)}>Vidhan sabha</button>)}
+	        {["both", "pc"].includes(props.scheme_data) && (<button className="btn-geo-opt" style={props.isac == false? {background:'#672448', color:'white'} : {}} onClick={() => props.handleChangeloc(false)}>Lok Sabha</button>)}
       </div>
 
-      <div>
-          <button className="btn btn-viz-download" onClick={() => handleToggleDropdown(!dropdownActive)}>
-            <span>Download</span>
-            <img className="button-caret-down" src={caretDown} alt="icon" />
-          </button>
-          {
-            dropdownActive
-            ?
-            <Dropdown handleDownloadReportImage={props.handleDownloadReportImage} showViz={props.showViz}/>
-            : null            
-          }
-      </div>
 
       <div class="radio-toolbar d-flex justify-content-end">
         {radioButtons.map((radio) => (
@@ -172,6 +160,17 @@ const DatavizViewControls = (props) => {
             </label>
           </Fragment>
         ))}
+
+          <button className="btn-viz-download" onClick={() => handleToggleDropdown(!dropdownActive)}>
+            <span>Download</span>
+            {/* <img className="button-caret-down" src={caretDown} alt="icon" /> */}
+          </button>
+          {
+            dropdownActive
+            ?
+            <Dropdown handleDownloadReportImage={props.handleDownloadReportImage} showViz={props.showViz}/>
+            : null            
+          }
       </div>
     </div>
   );

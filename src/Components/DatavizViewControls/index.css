@@ -33,21 +33,34 @@
     justify-content:space-between;
 }
 
-.btn-secondary{
+.btn-geo-opt{
     background: white;
     height: 34px;
     width: 150px;
     color: #672448;
     margin-right:10px;
     font-size: 12px;
+    border:1px solid transparent;
+    border-radius: 4px;
 }
 
 .btn-viz-download{
-    background: #672448;
+    background: white;
     height: 34px;
-    width: 150px;
-    color: white;
-    margin-right:10px;
+    width: 100px;
+    color: #672448;
     font-size: 12px;
-    border-color: #672448;
+    border-color: white;
+    border:1px solid transparent;
+    border-radius: 4px;
+    margin-left: 1rem; 
 }
+
+@media(min-width: 1440px){
+.viz-controls-container{
+    width: 74.4%;
+    margin-left: 25.5%;
+  }
+}
+
+
