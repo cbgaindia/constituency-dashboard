@@ -9,13 +9,13 @@
     border-radius: 4px;
     padding: 8px 12px;
     font-size: 12px;
-    color: #4B4797;
+    color: #672448;
     cursor: pointer;
     margin: 0;
   }
   
   .radio-toolbar input[type="radio"]:checked+label {
-    background-color: #4B4797;
+    background-color: #672448;
     color: white !important;
   }
 
@@ -36,7 +36,8 @@
 .btn-secondary{
     background: white;
     height: 34px;
-    width: 100px;
-    color: #4B4797;
+    width: 150px;
+    color: #672448;
     margin-right:10px;
+    font-size: 12px;
 }
