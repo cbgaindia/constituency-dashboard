@@ -274,7 +274,7 @@ class GraphComponent extends React.Component {
               <div className="select-placeholder">
                 <div className="jumbotron">
                   <h2 className="text-center">
-                    Select states to generate Visualization
+                    Select constituency to generate Visualization
                   </h2>
                 </div>
               </div>
