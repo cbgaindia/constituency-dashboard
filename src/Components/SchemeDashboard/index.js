@@ -238,7 +238,7 @@ const SchemeDashboard = (props) => {
           />
         </div>
       </div>
-      <div className="mt-5 mb-3 layout-wrapper">
+      {(recentDevelopments.length > 1) && (<div className="mt-5 mb-3 layout-wrapper">
         <div className="d-flex justify-content-between">
           <h2 className="section-heading text-dark ml-3">
             Recent Developments
@@ -272,12 +272,12 @@ const SchemeDashboard = (props) => {
           </div>
         </div>
         <div class="case-studies-cards-container mt-3">
-          {recentDevelopments[activeNewsPage - 1] &&
+          {recentDevelopments[activeNewsPage - 1] && 
             recentDevelopments[activeNewsPage - 1].map((news, index) => (
               <NewsCard data={news} cardindex={index} key={index} />
             ))}
         </div>
-      </div>
+      </div>)}
       <div className="related-scheme-section mt-5 layout-wrapper">
         <div className="d-flex justify-content-between">
           <h2 className="section-heading text-dark ml-3">Other Schemes</h2>
