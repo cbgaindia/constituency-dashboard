@@ -16,6 +16,7 @@ import pa from "../Images/schemesLogos/pa.png"
 import rkvy from "../Images/schemesLogos/rkvy.png"
 import sbmu from "../Images/schemesLogos/sbmu.png"
 import sg from "../Images/schemesLogos/sg.jpeg"
+import pmkisan from "../Images/schemesLogos/pmkisan.png"
 
 
 const schemeLogos = {
@@ -38,6 +39,7 @@ const schemeLogos = {
     scheme_sbmg : sbmu,
     scheme_icps : icps,
     scheme_nhm  : nhm,
+    scheme_pmkisan  : pmkisan,
 } 
 
 export default schemeLogos;

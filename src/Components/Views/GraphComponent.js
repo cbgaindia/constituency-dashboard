@@ -189,7 +189,7 @@ class GraphComponent extends React.Component {
               isMulti={true}
               simpleValue
               value={this.state.value}
-              placeholder="Select States"
+              placeholder="Select Constituency"
               noOptionsMessage={this.handleNoOptionsMessage}
               options={
                 this.state.value.length < 15

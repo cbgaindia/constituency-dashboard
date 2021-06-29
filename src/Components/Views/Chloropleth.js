@@ -13,7 +13,7 @@ config.params = {
   center: [20.94, 84.80],
   zoomControl: true,
   zoom: 7,
-  maxZoom: 10,
+  maxZoom: 9,
   minZoom: 7,
   scrollwheel: false,
   legends: true,
@@ -509,7 +509,7 @@ class StateToolTip extends React.Component {
     if (this.props.statetooltip == null) {
       return (
         <div className="statetoolPanelHeading">
-          Please select a state from the map
+          Select a constituency from the map
         </div>
       );
     }

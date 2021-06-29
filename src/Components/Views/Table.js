@@ -10,7 +10,7 @@ console.log('testing table', props.schemeData)
       <table className="scheme-table">
         <thead>
           <tr>
-            <th className="column-freeze">State/UT</th>
+            <th className="column-freeze">Constituency</th>
             {/* <th></th> */}
             {financialYears.map((year) => (
               <th key={year}>
