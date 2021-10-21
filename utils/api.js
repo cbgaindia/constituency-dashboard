@@ -3,7 +3,7 @@ import SchemesData from 'utils/schemesData';
 
 export async function fetchAPI(path) {
   const response = await fetch(
-    `https://openbudgetsindia.org/api/3/action/package_show?id=${path}`
+    `http://3.109.56.211/api/3/action/package_show?id=${path}`
   );
   const data = await response.json();
   return data;
@@ -19,7 +19,7 @@ export function generateSlug(slug) {
 
 export async function fetchQuery(query, value) {
   const queryRes = await fetch(
-    `https://openbudgetsindia.org/api/3/action/package_search?fq=${query}:"${value}"+organization:state-wise-schemes-data&rows=50`
+    `http://3.109.56.211/api/3/action/package_search?fq=${query}:"${value}"+organization:constituency-wise-scheme-data&rows=50`
   ).then((res) => res.json());
 
   return queryRes.result.results;
@@ -50,14 +50,19 @@ export async function fetchSheets(link) {
 }
 
 export async function dataTransform(id) {
-  const obj = {};
+  const obj = {
+    ac: {},
+    pc: {},
+  };
   let name;
   let type;
   let slug;
-  let url;
+  let acUrl;
+  let pcUrl;
   await fetchQuery('slug', id).then((data) => {
     data[0].resources.forEach((file) => {
-      if (file.url.includes('.xlsx')) url = file.url;
+      if (file.url.includes('pc.xlsx')) pcUrl = file.url;
+      else if (file.url.includes('ac.xlsx')) acUrl = file.url;
     });
 
     name = data[0].extras[0].value;
@@ -65,64 +70,130 @@ export async function dataTransform(id) {
     slug = data[0].name || '';
   });
 
-  await fetchSheets(url).then((res) => {
-    const dataParse = res[0];
-    const metaParse = res[1];
-    let metaObj = {};
+  if (acUrl) {
+    await fetchSheets(acUrl).then((res) => {
+      const dataParse = res[0];
+      const metaParse = res[1];
+      let metaObj = {};
 
-    // Meta Data
-    metaParse.forEach((val) => {
-      if (val[0]) {
-        metaObj = {
-          ...metaObj,
-          [generateSlug(val[0])]: val[1],
+      // Meta Data
+      metaParse.forEach((val) => {
+        if (val[0]) {
+          metaObj = {
+            ...metaObj,
+            [generateSlug(val[0])]: val[1],
+          };
+        }
+      });
+
+      obj.ac.metadata = {
+        description: metaObj['scheme-description'] || '',
+        name: name || '',
+        frequency: metaObj.frequency || '',
+        source: metaObj['data-source'] || '',
+        type: type || '',
+        note: metaObj['note:'] || '',
+        slug,
+        indicators: [],
+      };
+
+      // Tabular Data
+      for (let i = 3; i < dataParse[0].length; i += 1) {
+        const fiscal_year = {};
+
+        for (let j = 1; j < dataParse.length; j += 1) {
+          if (dataParse[j][2]) {
+            fiscal_year[dataParse[j][2].trim()] = {
+              ...fiscal_year[dataParse[j][2].trim()],
+              [dataParse[j][1]]:
+                Math.round((dataParse[j][i] + Number.EPSILON) * 100) / 100 ||
+                '',
+            };
+          }
+        }
+
+        const indicatorSlug =
+          generateSlug(metaObj[`indicator-${i - 2}-name`]) || '';
+
+        obj.ac.metadata.indicators.push(indicatorSlug);
+
+        obj.ac.data = {
+          ...obj.ac.data,
+          [`indicator_0${i - 2}`]: {
+            fiscal_year,
+            name: metaObj[`indicator-${i - 2}-name`] || '',
+            description: metaObj[`indicator-${i - 2}-description`] || '',
+            note: metaObj[`indicator-${i - 2}-note`] || '',
+            slug: indicatorSlug,
+            unit: metaObj[`indicator-${i - 2}-unit`] || '',
+          },
         };
       }
     });
+  }
 
-    obj.metadata = {
-      description: metaObj['scheme-description'] || '',
-      name: name || '',
-      frequency: metaObj.frequency || '',
-      source: metaObj['data-source'] || '',
-      type: type || '',
-      note: metaObj['note:'] || '',
-      slug,
-      indicators: [],
-    };
+  if (pcUrl) {
+    await fetchSheets(pcUrl).then((res) => {
+      const dataParse = res[0];
+      const metaParse = res[1];
+      let metaObj = {};
 
-    // Tabular Data
-    for (let i = 3; i < dataParse[0].length; i += 1) {
-      const fiscal_year = {};
-
-      for (let j = 1; j < dataParse.length; j += 1) {
-        if (dataParse[j][2]) {
-          fiscal_year[dataParse[j][2].trim()] = {
-            ...fiscal_year[dataParse[j][2].trim()],
-            [dataParse[j][1]]:
-              Math.round((dataParse[j][i] + Number.EPSILON) * 100) / 100 || '',
+      // Meta Data
+      metaParse.forEach((val) => {
+        if (val[0]) {
+          metaObj = {
+            ...metaObj,
+            [generateSlug(val[0])]: val[1],
           };
         }
-      }
+      });
 
-      const indicatorSlug =
-        generateSlug(metaObj[`indicator-${i - 2}-name`]) || '';
-
-      obj.metadata.indicators.push(indicatorSlug);
-
-      obj.data = {
-        ...obj.data,
-        [`indicator_0${i - 2}`]: {
-          fiscal_year,
-          name: metaObj[`indicator-${i - 2}-name`] || '',
-          description: metaObj[`indicator-${i - 2}-description`] || '',
-          note: metaObj[`indicator-${i - 2}-note`] || '',
-          slug: indicatorSlug,
-          unit: metaObj[`indicator-${i - 2}-unit`] || '',
-        },
+      obj.pc.metadata = {
+        description: metaObj['scheme-description'] || '',
+        name: name || '',
+        frequency: metaObj.frequency || '',
+        source: metaObj['data-source'] || '',
+        type: type || '',
+        note: metaObj['note:'] || '',
+        slug,
+        indicators: [],
       };
-    }
-  });
+
+      // Tabular Data
+      for (let i = 3; i < dataParse[0].length; i += 1) {
+        const fiscal_year = {};
+
+        for (let j = 1; j < dataParse.length; j += 1) {
+          if (dataParse[j][2]) {
+            fiscal_year[dataParse[j][2].trim()] = {
+              ...fiscal_year[dataParse[j][2].trim()],
+              [dataParse[j][1]]:
+                Math.round((dataParse[j][i] + Number.EPSILON) * 100) / 100 ||
+                '',
+            };
+          }
+        }
+
+        const indicatorSlug =
+          generateSlug(metaObj[`indicator-${i - 2}-name`]) || '';
+
+        obj.pc.metadata.indicators.push(indicatorSlug);
+
+        obj.pc.data = {
+          ...obj.pc.data,
+          [`indicator_0${i - 2}`]: {
+            fiscal_year,
+            name: metaObj[`indicator-${i - 2}-name`] || '',
+            description: metaObj[`indicator-${i - 2}-description`] || '',
+            note: metaObj[`indicator-${i - 2}-note`] || '',
+            slug: indicatorSlug,
+            unit: metaObj[`indicator-${i - 2}-unit`] || '',
+          },
+        };
+      }
+    });
+  }
+
   return obj;
 }
 

@@ -9,7 +9,7 @@ const Header = () => (
       <section className="branding">
         <Link href="/">
           <a>
-            <h1 className="branding__logo">Schemes Dashboard</h1>
+            <h1 className="branding__logo">Constituency Dashboard</h1>
           </a>
         </Link>
 

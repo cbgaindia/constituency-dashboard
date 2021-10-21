@@ -114,26 +114,44 @@ const radioButtons = [
 ];
 
 const DatavizViewControls = (props) => (
-  <fieldset className="scheme__controls">
-    <legend className="screen-reader-text">Select Viz type: </legend>
-    {radioButtons.map((radio, index) => (
-      <React.Fragment key={`dataviz-${index}`}>
-        <input
-          className="screen-reader-text"
-          type="radio"
-          id={radio.val}
-          name="viz-types"
-          value={radio.val}
-          onChange={(e) => props.handleChangeViz(e.target.value)}
-          checked={radio.val === props.view}
-          readOnly
-        />
-        <label className={radio.class} htmlFor={radio.val}>
-          {radio.val === props.view ? radio.checkImage : radio.uncheckImage}
-          {radio.title}
-        </label>
-      </React.Fragment>
-    ))}
-  </fieldset>
+  <div className="data-control">
+    <div className="data-control__sabha">
+      <button
+        type="button"
+        aria-pressed={props.isac}
+        onClick={() => props.handleChangeloc(true)}
+      >
+        Vidhan sabha
+      </button>
+      <button
+        type="button"
+        aria-pressed={!props.isac}
+        onClick={() => props.handleChangeloc(false)}
+      >
+        Lok Sabha
+      </button>
+    </div>
+    <fieldset className="scheme__controls">
+      <legend className="screen-reader-text">Select Viz type: </legend>
+      {radioButtons.map((radio, index) => (
+        <React.Fragment key={`dataviz-${index}`}>
+          <input
+            className="screen-reader-text"
+            type="radio"
+            id={radio.val}
+            name="viz-types"
+            value={radio.val}
+            onChange={(e) => props.handleChangeViz(e.target.value)}
+            checked={radio.val === props.view}
+            readOnly
+          />
+          <label className={radio.class} htmlFor={radio.val}>
+            {radio.val === props.view ? radio.checkImage : radio.uncheckImage}
+            {radio.title}
+          </label>
+        </React.Fragment>
+      ))}
+    </fieldset>
+  </div>
 );
 export default DatavizViewControls;

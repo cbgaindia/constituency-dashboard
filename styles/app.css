@@ -650,15 +650,53 @@ button {
   border-color: #aaa;
 }
 
+.data-control {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.data-control__sabha {
+  display: flex;
+}
+.data-control__sabha button {
+  padding: 0.5rem 1rem;
+  background-color: #ffffff;
+  color: #4b4797;
+}
+.data-control__sabha button:first-of-type {
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.data-control__sabha button:last-of-type {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+.data-control__sabha button[aria-pressed=true] {
+  background-color: #4b4797;
+  color: #ffffff;
+}
+@media (max-width: 480px) {
+  .data-control__sabha {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+@media (max-width: 1024px) {
+  .data-control {
+    grid-column: 1/2;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+
 .scheme__controls {
   display: flex;
-  justify-content: flex-end;
-  grid-column: 1/3;
   border: none;
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
-  justify-self: end;
+  padding: 0;
 }
 @media (max-width: 1024px) {
   .scheme__controls {

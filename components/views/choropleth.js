@@ -2,7 +2,10 @@
 import React, { Component } from 'react'
 import * as topojson from 'topojson-client'
 import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from 'react-leaflet'
-import { statesTopojson } from 'public/assets/data/IndiaStates'
+import { acTopojson } from 'public/assets/data/ac_orissa_topo'
+import { pcTopojson } from 'public/assets/data/pc_orissa_topo';
+
+// import { statesTopojson } from 'public/assets/data/IndiaStates'
 import 'leaflet/dist/leaflet.css'
 import Dropdown from 'components/dropdown/dropdown'
 import { sortList } from 'utils/helpers'
@@ -10,17 +13,17 @@ import { sortList } from 'utils/helpers'
 const config = {}
 
 config.params = {
-	center: [23.59, 81.96],
-	zoomControl: false,
-	zoom: 4,
-	maxZoom: 7,
-	minZoom: 4,
-	scrollwheel: false,
-	legends: true,
-	infoControl: true,
-	attributionControl: true,
-	dragging: false,
-	id: 'schemeMap',
+	center: [20.94, 84.80],
+  zoomControl: false,
+  zoom: 7,
+  maxZoom: 9,
+  minZoom: 7,
+  scrollwheel: false,
+  legends: true,
+  infoControl: true,
+  attributionControl: true,
+  dragging: true,
+	id: 'constituencyMap',
 }
 
 config.tileLayer = {
@@ -222,20 +225,23 @@ export default class Choropleth extends Component {
 	}
 
 	mungeData() {
+
+		const geoFile = this.props.isac ? acTopojson : pcTopojson;
+
 		const newGeoJsonData = new topojson.feature(
-			statesTopojson,
-			statesTopojson.objects.IndiaStates
+			geoFile,
+			geoFile.objects.Geo
 		)
 		let MappedFigures = new Array()
 
 		MappedFigures = newGeoJsonData.features.map((state, index) => {
 			for (const variable in state.properties) {
-				if (variable !== 'ST_NM') {
+				if (variable !== 'GEO_NAME') {
 					delete state.properties[variable]
 				}
 			}
 			const stateCode = Object.keys(this.props.stateCodes).find(
-				(code) => this.props.stateCodes[code] === state.properties.ST_NM
+				(code) => this.props.stateCodes[code] === state.properties.GEO_NAME
 			)
 			if (stateCode !== null) {
 				const fiscalYears = Object.keys(this.props.schemeData.fiscal_year)
@@ -339,7 +345,7 @@ export default class Choropleth extends Component {
 
 	setToolTipContent(values) {
 		this.setState({
-			hoverstate: values.feature.properties.ST_NM,
+			hoverstate: values.feature.properties.GEO_NAME,
 			hoverFigure: values.feature.properties[this.state.selectedYear],
 		})
 	}
@@ -391,7 +397,7 @@ export default class Choropleth extends Component {
 								data={this.state.selectedFigure}
 								weight={config.geojson.weight}
 								style={(feature) => this.getstyle(feature)}
-								valueProperty={(feature) => feature.properties.ST_NM}
+								valueProperty={(feature) => feature.properties.GEO_NAME}
 								onEachFeature={this.onEachFeature.bind(null, this)}
 								ref={this.geojson}
 							/>

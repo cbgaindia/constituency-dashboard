@@ -10,60 +10,38 @@ import IndicatorSelector from 'components/indicatorSelector/indicatorSelector';
 import SchemeDetailsView from 'components/schemeDetailsView/schemeDetailsView';
 import RelatedSchemes from 'components/relatedSchemes/relatedSchemes';
 import SchemeNews from 'components/schemeNews/schemeNews';
+import { acTopojson } from 'public/assets/data/ac_orissa_topo';
+import { pcTopojson } from 'public/assets/data/pc_orissa_topo';
 
-const stateCodes = {
-  1: 'Andhra Pradesh',
-  2: 'Arunachal Pradesh',
-  3: 'Assam',
-  4: 'Bihar',
-  5: 'Chhattisgarh',
-  6: 'Goa',
-  7: 'Gujarat',
-  8: 'Haryana',
-  9: 'Himachal Pradesh',
-  10: 'Jharkhand',
-  11: 'Karnataka',
-  12: 'Kerala',
-  13: 'Madhya Pradesh',
-  14: 'Maharashtra',
-  15: 'Manipur',
-  16: 'Meghalaya',
-  17: 'Mizoram',
-  18: 'Nagaland',
-  19: 'Odisha',
-  20: 'Punjab',
-  21: 'Rajasthan',
-  22: 'Sikkim',
-  23: 'Tamil Nadu',
-  24: 'Telangana',
-  25: 'Tripura',
-  26: 'Uttar Pradesh',
-  27: 'Uttarakhand',
-  28: 'West Bengal',
-  29: 'Andaman & Nicobar',
-  30: 'Chandigarh',
-  31: 'Dadra and Nagar Haveli',
-  32: 'Daman and Diu',
-  33: 'Delhi',
-  34: 'Jammu & Kashmir',
-  35: 'Ladakh',
-  36: 'Lakshadweep',
-  37: 'Puducherry',
-};
+const acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+  return result;
+}, {});
 
-const Scheme = ({ scheme, related, news }) => {
+const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+  return result;
+}, {});
+
+const Scheme = ({ scheme, related }) => {
+  console.log(scheme);
   const [showViz, setShowViz] = useState(true);
   const [activeViz, setActiveViz] = useState('map');
   const [activeIndicator, setActiveIndicator] = useState('');
   const [activeYear, setActiveYear] = useState('2019-20');
   const [loading, setLoading] = useState(true);
+  const [stateCodes, setstateCodes] = useState(acCodes);
+  const [isac, setIsac] = useState(true);
 
   const router = useRouter();
 
+  const currentScheme = isac ? scheme.ac : scheme.pc;
+
   useEffect(() => {
     // Setting current indicator
-    let currentIndicator = Object.keys(scheme.data).find(
-      (indicator) => scheme.data[indicator].slug === router.query.indicator
+    let currentIndicator = Object.keys(currentScheme.data).find(
+      (indicator) =>
+        currentScheme.data[indicator].slug === router.query.indicator
     );
     if (currentIndicator === undefined) currentIndicator = 'indicator_01';
     setActiveIndicator(currentIndicator);
@@ -74,7 +52,10 @@ const Scheme = ({ scheme, related, news }) => {
     setShowViz(true);
     setActiveViz(type);
   };
-
+  const handleChangeloc = (value) => {
+    setIsac(value);
+    setstateCodes(value ? acCodes : pcCodes);
+  };
   const handleToggleShowViz = (status) => {
     setShowViz(status);
   };
@@ -82,8 +63,8 @@ const Scheme = ({ scheme, related, news }) => {
     setActiveYear(year);
   };
   const seo = {
-    title: scheme.metadata.name,
-    description: scheme.metadata.description,
+    title: currentScheme.metadata.name,
+    description: currentScheme.metadata.description,
     url: `https://schemes.openbudgetsindia.org/scheme/${router.query.scheme}`,
   };
 
@@ -128,18 +109,20 @@ const Scheme = ({ scheme, related, news }) => {
           <Seo seo={seo} />
           {!loading && (
             <>
-              <SchemeIntroduction data={scheme.metadata} />
+              <SchemeIntroduction data={currentScheme.metadata} />
               <span className="horizontal-seperator" />
 
               <div className="scheme__container">
                 <DatavizViewControls
                   view={activeViz}
                   handleChangeViz={handleChangeViz}
+                  handleChangeloc={handleChangeloc}
+                  isac={isac}
                 />
                 {activeIndicator && (
                   <>
                     <IndicatorSelector
-                      schemeData={scheme}
+                      schemeData={currentScheme}
                       activeIndicator={activeIndicator}
                       currentSlug={router.query.scheme}
                     />
@@ -149,19 +132,20 @@ const Scheme = ({ scheme, related, news }) => {
                       showViz={showViz}
                       activeViz={activeViz}
                       handleToggleShowViz={handleToggleShowViz}
-                      schemeData={scheme}
+                      schemeData={currentScheme}
                       activeIndicator={activeIndicator}
                       activeYear={activeYear}
                       stateCodes={stateCodes}
                       setYearChange={setYearChange}
+                      isac={isac}
                     />
                   </>
                 )}
               </div>
 
-              <SchemeNews newsData={news} />
+              {/* <SchemeNews newsData={news} />
 
-              <RelatedSchemes related={related} />
+              <RelatedSchemes related={related} /> */}
             </>
           )}
         </div>
@@ -184,14 +168,14 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const scheme = await dataTransform(params.scheme);
-  const related = await fetchRelated(
-    scheme.metadata.name,
-    scheme.metadata.type
-  );
-  const news = await fetchNews(params.scheme);
+  // const related = await fetchRelated(
+  //   scheme.metadata.name,
+  //   scheme.metadata.type
+  // );
+  // const news = await fetchNews(params.scheme);
 
   return {
-    props: { scheme, related, news },
+    props: { scheme },
     revalidate: 1,
   };
 }

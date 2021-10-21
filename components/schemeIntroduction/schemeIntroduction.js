@@ -43,7 +43,7 @@ export default function SchemeIntroduction(props) {
       <div className="scheme__heading">
         <h2 className="scheme__title">{props.data && props.data.name}</h2>
         <a
-          href={`https://openbudgetsindia.org/dataset/${props.data.slug}`}
+          href={`http://3.109.56.211/dataset/${props.data.slug}`}
           className="scheme__dataset"
           rel="noreferrer"
           target="_blank"
