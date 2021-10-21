@@ -662,7 +662,7 @@ button {
 .data-control__sabha button {
   padding: 0.5rem 1rem;
   background-color: #ffffff;
-  color: #4b4797;
+  color: #672448;
 }
 .data-control__sabha button:first-of-type {
   border-top-left-radius: 4px;
@@ -673,7 +673,7 @@ button {
   border-bottom-right-radius: 4px;
 }
 .data-control__sabha button[aria-pressed=true] {
-  background-color: #4b4797;
+  background-color: #672448;
   color: #ffffff;
 }
 @media (max-width: 480px) {

@@ -11,9 +11,7 @@
 		button {
 			padding: 0.5rem 1rem;
 			background-color: #ffffff;
-			color: #4b4797;
-			// width: 100%;
-			// min-width: 110px;
+			color: $main-color;
 
 			&:first-of-type {
 				border-top-left-radius: 4px;
@@ -24,7 +22,7 @@
 				border-bottom-right-radius: 4px;
 			}
 			&[aria-pressed='true'] {
-				background-color: #4b4797;
+				background-color: $main-color;
 				color: #ffffff;
 			}
 		}
