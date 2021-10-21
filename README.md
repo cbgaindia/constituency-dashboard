@@ -1,31 +1,30 @@
-<h1 align="center">Schemes Dashboard</h1>
+<h1 align="center">Constituency Dashboard</h1>
 <h3 align="center">Part of the <a href="https://openbudgetsindia.org/">Open Budgets India</a> Project</h3>
 <br/>
 <p align="center">
-<img alt="Schemed Dashboard Logo" src="https://budgetbasics.openbudgetsindia.org/api/uploads/Scheme_Dashboard_bc140eb7e1.jpg"/>
+<img alt="Schemed Dashboard Logo" src="https://budgetbasics.openbudgetsindia.org/api/uploads/constituency_banner_4395dbfb14.jpg"/>
 <br/>
 <br/>
 <a href="https://github.com/cbgaindia/schemes-dashboard/blob/main/LICENSE">
 <img alt="MIT License" src="https://img.shields.io/apm/l/atomic-design-ui.svg?"/>
 </a>
 </p>
-
-Find downloadable data, visualisations and other useful information related to a number of schemes run by the Union and State Governments.
+<p align="center">Explore state-wise fiscal information of major social development schemes in India.</p>
 
 <br/>
-<p align="center">Visit<a href="schemes.openbudgetsindia.org/"> Schemes Dashboard</a></p>
+<p align="center">Visit<a href="schemes.openbudgetsindia.org/"> Constituency Dashboard</a></p>
 
 - [Features](#features)
 - [Getting Started](#getting-started)
-  - [Backend](#backend)
+	- [Backend](#backend)
 - [Guide](#guide)
-  - [Directory Structure](#directory-structure)
-  - [Styling](#styling)
-  - [Components](#components)
-  - [Utils](#utils)
+	- [Directory Structure](#directory-structure)
+	- [Styling](#styling)
+	- [Components](#components)
+	- [Utils](#utils)
 - [Data Fetching](#data-fetching)
-  - [Homepage Data](#homepage-data)
-  - [Dynamic Routes Data](#dynamic-routes-data)
+	- [Homepage Data](#homepage-data)
+	- [Dynamic Routes Data](#dynamic-routes-data)
 - [Run Locally](#run-locally)
 - [Contributing](#contributing)
 
