@@ -1,3 +1,5 @@
+@use '../../styles/tools/variables' as *;
+
 .indicator {
 	&__label {
 		display: block;
@@ -17,7 +19,7 @@
 			margin: 0;
 
 			&:checked ~ .indicator__span {
-				background-color: #4b4797;
+				background-color: $main-color;
 
 				&::after {
 					display: block;

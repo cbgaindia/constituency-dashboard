@@ -1,3 +1,5 @@
+@use '../../styles/tools/variables' as *;
+
 .skiptarget {
 	width: 1px;
 	height: 1px;
@@ -6,7 +8,7 @@
 }
 
 .skip-to-content-link {
-	background: #4b4797;
+	background: $main-color;
 	color: white;
 	height: 2rem;
 	left: 50%;

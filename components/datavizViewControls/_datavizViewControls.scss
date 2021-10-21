@@ -59,7 +59,7 @@
 		border-radius: 4px;
 		padding: 0.5rem 0.8rem;
 		font-size: 0.8rem;
-		color: #4b4797;
+		color: $main-color;
 		cursor: pointer;
 		margin: 0;
 
@@ -74,7 +74,7 @@
 
 	input[type='radio'] {
 		&:checked + label {
-			background-color: #4b4797;
+			background-color: $main-color;
 			color: white;
 		}
 	}

@@ -38,7 +38,7 @@ config.tileLayer = {
 
 config.geojson = {
 	weight: '1',
-	color: '#183152',
+	color: '#662447',
 	fill: true,
 }
 
@@ -279,19 +279,19 @@ export default class Choropleth extends Component {
 			return '#676767'
 		}
 		if (band === 1) {
-			return '#D3D1FF'
+			return 'hsl(328, 48%, 87%)'
 		}
 		if (band === 2) {
-			return '#CEA8FF'
+			return 'hsl(328, 48%, 72%)'
 		}
 		if (band === 3) {
-			return '#AB71F5'
+			return 'hsl(328, 48%, 57%)'
 		}
 		if (band === 4) {
-			return '#7C46C2'
+			return 'hsl(328, 48%, 42%)'
 		}
 		if (band === 5) {
-			return '#441E75'
+			return 'hsl(328, 48%, 27%)'
 		}
 	}
 
@@ -418,27 +418,27 @@ export default class Choropleth extends Component {
 							{this.state.bandFigures ? (
 								<ul className="legend-labels">
 									<LegendStep
-										bgColor="#D3D1FF"
+										bgColor="hsl(328, 48%, 87%)"
 										band="20%"
 										range={this.state.bandFigures['20%']}
 									/>
 									<LegendStep
-										bgColor="#CEA8FF"
+										bgColor="hsl(328, 48%, 72%)"
 										band="40%"
 										range={this.state.bandFigures['40%']}
 									/>
 									<LegendStep
-										bgColor="#AB71F5"
+										bgColor="hsl(328, 48%, 57%)"
 										band="60%"
 										range={this.state.bandFigures['60%']}
 									/>
 									<LegendStep
-										bgColor="#7C46C2"
+										bgColor="hsl(328, 48%, 42%)"
 										band="80%"
 										range={this.state.bandFigures['80%']}
 									/>
 									<LegendStep
-										bgColor="#441E75"
+										bgColor="hsl(328, 48%, 27%)"
 										band="100%"
 										range={this.state.bandFigures['100%']}
 									/>
