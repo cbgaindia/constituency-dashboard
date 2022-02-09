@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Table = (props) => {
   const financialYears = Object.keys(props.schemeData.fiscal_year).reverse();
@@ -8,7 +8,7 @@ const Table = (props) => {
       <table className="scheme-table">
         <thead>
           <tr>
-            <th>State/UT</th>
+            <th>Constituency</th>
             {financialYears.map((year) => (
               <th key={year}>
                 {indicatorName} {year}
@@ -25,8 +25,8 @@ const Table = (props) => {
                   key={year}
                   className={`${
                     parseInt(props.schemeData.fiscal_year[year][state], 10) < 0
-                      ? 'text-danger'
-                      : ''
+                      ? "text-danger"
+                      : ""
                   }`}
                 >
                   {props.schemeData.fiscal_year[year][state]}

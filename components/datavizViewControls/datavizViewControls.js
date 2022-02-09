@@ -1,4 +1,5 @@
-import React from 'react';
+import React from "react";
+import Dropdown from "components/dropdown/dropdown";
 
 const radioButtons = [
   {
@@ -36,9 +37,9 @@ const radioButtons = [
         />
       </svg>
     ),
-    title: 'Compare States',
-    val: 'bar',
-    class: 'mr-3',
+    title: "Compare States",
+    val: "bar",
+    class: "mr-3",
   },
   {
     uncheckImage: (
@@ -71,9 +72,9 @@ const radioButtons = [
         />
       </svg>
     ),
-    title: 'Choropleth',
-    val: 'map',
-    class: 'text-light left-curved-border',
+    title: "Choropleth",
+    val: "map",
+    class: "text-light left-curved-border",
   },
   {
     uncheckImage: (
@@ -107,29 +108,36 @@ const radioButtons = [
         />
       </svg>
     ),
-    title: 'Table',
-    val: 'table',
-    class: 'text-light right-curved-border',
+    title: "Table",
+    val: "table",
+    class: "text-light right-curved-border",
   },
 ];
 
 const DatavizViewControls = (props) => (
   <div className="data-control">
-    <div className="data-control__sabha">
-      <button
-        type="button"
-        aria-pressed={props.isac}
-        onClick={() => props.handleChangeloc(true)}
-      >
-        Vidhan sabha
-      </button>
-      <button
-        type="button"
-        aria-pressed={!props.isac}
-        onClick={() => props.handleChangeloc(false)}
-      >
-        Lok Sabha
-      </button>
+    <div style={{ display: "flex", gap: "1em" }}>
+      <Dropdown
+        options={["Odisha"]}
+        heading="Select Year"
+        handleDropdownChange={() => {}}
+      />
+      <div className="data-control__sabha">
+        <button
+          type="button"
+          aria-pressed={props.isac}
+          onClick={() => props.handleChangeloc(true)}
+        >
+          Vidhan sabha
+        </button>
+        <button
+          type="button"
+          aria-pressed={!props.isac}
+          onClick={() => props.handleChangeloc(false)}
+        >
+          Lok Sabha
+        </button>
+      </div>
     </div>
     <fieldset className="scheme__controls">
       <legend className="screen-reader-text">Select Viz type: </legend>

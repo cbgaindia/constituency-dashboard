@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import Seo from 'components/seo/seo';
-import { dataTransform, fetchRelated, fetchNews, fetchQuery } from 'utils/api';
-import { export_table_to_csv } from 'utils/download-table';
-import SchemeIntroduction from 'components/schemeIntroduction/schemeIntroduction';
-import domtoimage from 'dom-to-image';
-import DatavizViewControls from 'components/datavizViewControls/datavizViewControls';
-import IndicatorSelector from 'components/indicatorSelector/indicatorSelector';
-import SchemeDetailsView from 'components/schemeDetailsView/schemeDetailsView';
-import RelatedSchemes from 'components/relatedSchemes/relatedSchemes';
-import SchemeNews from 'components/schemeNews/schemeNews';
-import { acTopojson } from 'public/assets/data/ac_orissa_topo';
-import { pcTopojson } from 'public/assets/data/pc_orissa_topo';
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import Seo from "components/seo/seo";
+import { dataTransform, fetchRelated, fetchNews, fetchQuery } from "utils/api";
+import { export_table_to_csv } from "utils/download-table";
+import SchemeIntroduction from "components/schemeIntroduction/schemeIntroduction";
+import domtoimage from "dom-to-image";
+import DatavizViewControls from "components/datavizViewControls/datavizViewControls";
+import IndicatorSelector from "components/indicatorSelector/indicatorSelector";
+import SchemeDetailsView from "components/schemeDetailsView/schemeDetailsView";
+import RelatedSchemes from "components/relatedSchemes/relatedSchemes";
+import SchemeNews from "components/schemeNews/schemeNews";
+import { acTopojson } from "public/assets/data/ac_orissa_topo";
+import { pcTopojson } from "public/assets/data/pc_orissa_topo";
 
 const acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
   result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
@@ -25,24 +25,32 @@ const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
 
 const Scheme = ({ scheme, related }) => {
   const [showViz, setShowViz] = useState(true);
-  const [activeViz, setActiveViz] = useState('map');
-  const [activeIndicator, setActiveIndicator] = useState('');
-  const [activeYear, setActiveYear] = useState('2019-20');
+  const [activeViz, setActiveViz] = useState("map");
+  const [activeIndicator, setActiveIndicator] = useState("");
+  const [activeYear, setActiveYear] = useState("2019-20");
   const [loading, setLoading] = useState(true);
   const [stateCodes, setstateCodes] = useState(acCodes);
   const [isac, setIsac] = useState(true);
+  const States = Object.keys(scheme.ac.data.indicator_01.state_Obj);
+  const [selectedState, setSelectedState] = useState(States[0]);
 
   const router = useRouter();
 
-  const currentScheme = isac ? scheme.ac : scheme.pc;
+  const indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
+  indicatorKeys.map((indicator) => {
+    scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
+      scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+  });
+  let currentScheme = isac ? scheme.ac : scheme.pc;
 
   useEffect(() => {
     // Setting current indicator
+
     let currentIndicator = Object.keys(currentScheme.data).find(
       (indicator) =>
         currentScheme.data[indicator].slug === router.query.indicator
     );
-    if (currentIndicator === undefined) currentIndicator = 'indicator_01';
+    if (currentIndicator === undefined) currentIndicator = "indicator_01";
     setActiveIndicator(currentIndicator);
     setLoading(false);
   }, [router]);
@@ -53,6 +61,12 @@ const Scheme = ({ scheme, related }) => {
   };
   const handleChangeloc = (value) => {
     setIsac(value);
+    const indicatorKeys = Object.keys(value ? scheme.ac.data : scheme.pc.data);
+    indicatorKeys.map((indicator) => {
+      scheme[value ? "ac" : "pc"].data[indicator].fiscal_year =
+        scheme[value ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+    });
+    currentScheme = value ? scheme.ac : scheme.pc;
     setstateCodes(value ? acCodes : pcCodes);
   };
   const handleToggleShowViz = (status) => {
@@ -70,13 +84,13 @@ const Scheme = ({ scheme, related }) => {
   const filterElements = (node) => {
     try {
       return (
-        node.getAttribute('id') !== 'hide-this-button' &&
-        node.getAttribute('class') !== 'statetooltip' &&
-        node.getAttribute('class') !== 'tcontainer' &&
-        node.getAttribute('class') !== 'select-container' &&
-        node.getAttribute('class') !== 'details__download' &&
+        node.getAttribute("id") !== "hide-this-button" &&
+        node.getAttribute("class") !== "statetooltip" &&
+        node.getAttribute("class") !== "tcontainer" &&
+        node.getAttribute("class") !== "select-container" &&
+        node.getAttribute("class") !== "details__download" &&
         node.nodeType != 8 &&
-        node.getAttribute('class') != 'see-details-text'
+        node.getAttribute("class") != "see-details-text"
       );
     } catch (err) {
       return true;
@@ -84,15 +98,15 @@ const Scheme = ({ scheme, related }) => {
   };
 
   const handleDownloadReportImage = () => {
-    if (activeViz === 'table') export_table_to_csv('table.csv');
+    if (activeViz === "table") export_table_to_csv("table.csv");
     else
       domtoimage
-        .toPng(document.getElementById('report-container'), {
+        .toPng(document.getElementById("report-container"), {
           filter: filterElements,
         })
         .then((dataURL) => {
-          const link = document.createElement('a');
-          link.download = 'Visualization Report.png';
+          const link = document.createElement("a");
+          link.download = "Visualization Report.png";
           link.href = dataURL;
           link.click();
         });
@@ -154,7 +168,7 @@ const Scheme = ({ scheme, related }) => {
 };
 
 export async function getStaticPaths() {
-  const data = await fetchQuery('schemeType', 'Centrally Sponsored Scheme');
+  const data = await fetchQuery("schemeType", "Centrally Sponsored Scheme");
   return {
     paths: data.map((scheme) => ({
       params: {
