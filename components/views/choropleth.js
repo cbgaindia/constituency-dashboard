@@ -2,14 +2,13 @@
 import React, { Component } from "react";
 import * as topojson from "topojson-client";
 import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from "react-leaflet";
-import { acTopojson } from "public/assets/data/ac_orissa_topo";
-import { pcTopojson } from "public/assets/data/pc_orissa_topo";
+// import { acTopojson } from "public/assets/data/ac_orissa_topo";
+// import { pcTopojson } from "public/assets/data/pc_orissa_topo";
 
 //import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
 //import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
 //import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
 //import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
-
 
 //const acTopojson = props.selectedState == "Bihar" ? ac_bihar : ac_orissa;
 //const pcTopojson = props.selectedState == "Bihar" ? pc_bihar : pc_orissa;
@@ -26,7 +25,7 @@ config.params = {
   zoomControl: false,
   zoom: 7,
   maxZoom: 9,
-  minZoom: 7,
+  minZoom: 3,
   scrollwheel: false,
   legends: true,
   infoControl: true,
@@ -223,9 +222,11 @@ export default class Choropleth extends Component {
   }
 
   mungeData() {
-    const geoFile = this.props.isac ? acTopojson : pcTopojson;
+    const geoFile = this.props.isac
+      ? JSON.parse(JSON.stringify(this.props.acTopojson))
+      : JSON.parse(JSON.stringify(this.props.pcTopojson));
 
-    console.log('statecode', this.props.stateCodes)
+    console.log("statecode", this.props.stateCodes);
     const newGeoJsonData = new topojson.feature(geoFile, geoFile.objects.Geo);
     let MappedFigures = new Array();
 
@@ -252,42 +253,6 @@ export default class Choropleth extends Component {
 
     return { type: "FeatureCollection", features: MappedFigures };
   }
-
-  //   mungeData() {
-  //     const geoFile = this.props.isac ? acTopojson : pcTopojson;
-
-  //     const newGeoJsonData = new topojson.feature(geoFile, geoFile.objects.Geo);
-  //     let MappedFigures = new Array();
-
-  //     MappedFigures = newGeoJsonData.features.map((state, index) => {
-  //       for (const variable in state.properties) {
-  //         if (variable !== "GEO_NAME") {
-  //           delete state.properties[variable];
-  //         }
-  //       }
-  //       const stateCode = Object.keys(this.props.stateCodes).find(
-  //         (code) => this.props.stateCodes[code] === state.properties.GEO_NAME
-  //       );
-  //       if (stateCode !== null) {
-  //         const States = Object.keys(this.props.schemeData.state_Obj);
-  //         let fiscalYears;
-  //         States.map((stateItem) => {
-  //           fiscalYears = Object.keys(this.props.schemeData.state_Obj[stateItem]);
-  //           fiscalYears.forEach((year) => {
-  //             let valueToSet =
-  //               this.props.schemeData.state_Obj[stateItem][year][stateCode];
-  //             valueToSet =
-  //               valueToSet === "NA" || valueToSet === undefined
-  //                 ? null
-  //                 : valueToSet;
-  //             state.properties[year] = valueToSet;
-  //           });
-  //         });
-  //       }
-  //       return state;
-  //     });
-  //     return { type: "FeatureCollection", features: MappedFigures };
-  //   }
 
   getBandNum(figure) {
     if (figure) {

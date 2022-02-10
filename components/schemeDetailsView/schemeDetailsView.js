@@ -1,13 +1,13 @@
-import React from 'react';
-import dynamic from 'next/dynamic';
-import IndicatorDefinition from 'components/views/indicatorDefinitions';
-import GraphComponent from 'components/views/graphComponent';
-import Table from 'components/views/table';
+import React from "react";
+import dynamic from "next/dynamic";
+import IndicatorDefinition from "components/views/indicatorDefinitions";
+import GraphComponent from "components/views/graphComponent";
+import Table from "components/views/table";
 
 const SchemesDetailsView = (props) => {
   const Choropleth = React.useMemo(
     () =>
-      dynamic(() => import('components/views/choropleth'), {
+      dynamic(() => import("components/views/choropleth"), {
         loading: () => <p>Map is loading</p>,
         ssr: false,
       }),
@@ -25,7 +25,7 @@ const SchemesDetailsView = (props) => {
   const dataSource = props.schemeData.metadata.source;
   return (
     <div className="schemes__details">
-      <div id={props.showViz ? 'report-container' : ''}>
+      <div id={props.showViz ? "report-container" : ""}>
         <div className="details__header">
           {!props.showViz ? (
             <>
@@ -42,7 +42,7 @@ const SchemesDetailsView = (props) => {
               <div className="details__header--viz-show">
                 <h3>{indicatorName}</h3>
                 <p>
-                  {props.activeViz === 'map'
+                  {props.activeViz === "map"
                     ? `${activeYear} | ${schemeName}`
                     : schemeName}
                 </p>
@@ -65,8 +65,8 @@ const SchemesDetailsView = (props) => {
             id="vis-container"
             className={
               props.showViz
-                ? 'details__visualisation'
-                : 'details__visualisation additional-details'
+                ? "details__visualisation"
+                : "details__visualisation additional-details"
             }
           >
             {!props.showViz ? (
@@ -75,7 +75,7 @@ const SchemesDetailsView = (props) => {
                 schemeData={props.schemeData.metadata}
               />
             ) : null}
-            {props.showViz && props.activeViz === 'map' ? (
+            {props.showViz && props.activeViz === "map" ? (
               <Choropleth
                 budgetAttr="A"
                 unit={props.schemeData.data[props.activeIndicator].unit}
@@ -84,10 +84,12 @@ const SchemesDetailsView = (props) => {
                 setYearChange={props.setYearChange}
                 isac={props.isac}
                 selectedState={props.selectedState}
+                acTopojson={props.acTopojson}
+                pcTopojson={props.pcTopojson}
                 key={props.selectedState}
               />
             ) : null}
-            {props.showViz && props.activeViz === 'bar' ? (
+            {props.showViz && props.activeViz === "bar" ? (
               <GraphComponent
                 budgetAttr="A"
                 stateCodes={props.stateCodes}
@@ -96,7 +98,7 @@ const SchemesDetailsView = (props) => {
                 }
               />
             ) : null}
-            {props.showViz && props.activeViz === 'table' ? (
+            {props.showViz && props.activeViz === "table" ? (
               <Table
                 stateCodes={props.stateCodes}
                 schemeData={props.schemeData.data[props.activeIndicator]}
@@ -107,7 +109,7 @@ const SchemesDetailsView = (props) => {
         <div className="details__info">
           {dataSource && (
             <p>
-              Data Source:{' '}
+              Data Source:{" "}
               <span className="text-dark dont-break-out">{dataSource}</span>
             </p>
           )}
@@ -119,7 +121,7 @@ const SchemesDetailsView = (props) => {
               disabled={!props.showViz}
               type="button"
             >
-              Download {props.activeViz == 'table' ? 'CSV' : 'Visualisation'}
+              Download {props.activeViz == "table" ? "CSV" : "Visualisation"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"

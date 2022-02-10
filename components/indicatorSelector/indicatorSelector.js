@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import SearchBar from 'components/searchBar/searchBar';
-import IndicatorRadioButton from 'components/indicatorRadioButton/indicatorRadioButton';
+import React, { useState, useEffect } from "react";
+import SearchBar from "components/searchBar/searchBar";
+import IndicatorRadioButton from "components/indicatorRadioButton/indicatorRadioButton";
 
 const IndicatorSelector = (props) => {
   const indicators = props.schemeData && Object.keys(props.schemeData.data);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchedData, setSearchedData] = useState(indicators);
 
   useEffect(() => {

@@ -10,20 +10,12 @@ import IndicatorSelector from "components/indicatorSelector/indicatorSelector";
 import SchemeDetailsView from "components/schemeDetailsView/schemeDetailsView";
 import RelatedSchemes from "components/relatedSchemes/relatedSchemes";
 import SchemeNews from "components/schemeNews/schemeNews";
-// import { acTopojson } from "public/assets/data/ac_orissa_topo";
-// import { pcTopojson } from "public/assets/data/pc_orissa_topo";
-
-
-
 import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
 import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
 import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
 import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
 
-
-
 const Scheme = ({ scheme, related }) => {
-  //console.log("enter", scheme);
   const [showViz, setShowViz] = useState(true);
   const [activeViz, setActiveViz] = useState("map");
   const [activeIndicator, setActiveIndicator] = useState("");
@@ -33,23 +25,7 @@ const Scheme = ({ scheme, related }) => {
   const [isac, setIsac] = useState(true);
   const States = Object.keys(scheme.ac.data.indicator_01.state_Obj);
   const [selectedState, setSelectedState] = useState(States[0]);
-
-  //console.log(selectedState);
-
-  const acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
-  const pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
-
-  const acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-  const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-  const [stateCodes, setstateCodes] = useState(acCodes);
+  const [stateCodes, setstateCodes] = useState({});
 
   const router = useRouter();
 
@@ -60,34 +36,44 @@ const Scheme = ({ scheme, related }) => {
   });
   let currentScheme = isac ? scheme.ac : scheme.pc;
 
+  let acCodes = {};
+  let pcCodes = {};
+  let acTopojson = {};
+  let pcTopojson = {};
+
+  // Setting selected state and const type codes
+  acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
+  pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
+
   useEffect(() => {
+    // Setting selected state and const type codes
+    acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
+    pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
+
+    acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    setstateCodes(isac ? acCodes : pcCodes);
+
+    // Setting CurrentScheme Data
 
     const indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
     indicatorKeys.map((indicator) => {
-	    scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
-	      scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+      scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
+        scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
     });
     currentScheme = isac ? scheme.ac : scheme.pc;
-    console.log("a", currentScheme)
-
-
-    const acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
-    const pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
-
-    const acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-    const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-    //console.log('accode', acCodes)
-    //console.log('pccode', pcCodes)
-
-    setstateCodes(isac ? acCodes : pcCodes);
+    console.log(
+      "🚀 ~ file: [scheme].js ~ line 69 ~ useEffect ~ currentScheme",
+      currentScheme
+    );
 
     // Setting current indicator
 
@@ -98,7 +84,7 @@ const Scheme = ({ scheme, related }) => {
     if (currentIndicator === undefined) currentIndicator = "indicator_01";
     setActiveIndicator(currentIndicator);
     setLoading(false);
-  }, [router, selectedState]);
+  }, [router, selectedState, isac]);
 
   const handleChangeViz = (type) => {
     setShowViz(true);
@@ -106,35 +92,11 @@ const Scheme = ({ scheme, related }) => {
   };
   const handleChangeloc = (value) => {
     setIsac(value);
-    const indicatorKeys = Object.keys(value ? scheme.ac.data : scheme.pc.data);
-    indicatorKeys.map((indicator) => {
-      scheme[value ? "ac" : "pc"].data[indicator].fiscal_year =
-        scheme[value ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
-    });
-    currentScheme = value ? scheme.ac : scheme.pc;
-    setstateCodes(value ? acCodes : pcCodes);
   };
 
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
-
-    const acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-    const pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-	  result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-	  return result;
-	}, {});
-
-   console.log(acTopojson)
-
-    console.log('accode', acCodes)
-    console.log('pccode', pcCodes)
-
-    setstateCodes(isac ? acCodes : pcCodes);
-  }
+  };
 
   const handleToggleShowViz = (status) => {
     setShowViz(status);
@@ -221,6 +183,8 @@ const Scheme = ({ scheme, related }) => {
                       setYearChange={setYearChange}
                       isac={isac}
                       selectedState={selectedState}
+                      acTopojson={acTopojson}
+                      pcTopojson={pcTopojson}
                     />
                   </>
                 )}
