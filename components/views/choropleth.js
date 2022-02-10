@@ -81,6 +81,7 @@ export default class Choropleth extends Component {
   }
 
   componentDidMount() {
+    console.log("This is choropleth state codes", this.props.stateCodes);
     const MappedFigures = this.mungeData();
     this.setState({ selectedFigure: MappedFigures });
     const defaultYear = this.getYearList(this.props.schemeData)[
@@ -95,6 +96,11 @@ export default class Choropleth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    console.log(
+      "This is choropleth state codes did update",
+      prevProps.stateCodes
+    );
+
     if (prevProps.schemeData != this.props.schemeData) {
       const MappedFigures = this.mungeData();
       const yearList = this.getYearList(this.props.schemeData);

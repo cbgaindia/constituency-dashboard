@@ -92,10 +92,39 @@ const Scheme = ({ scheme, related }) => {
   };
   const handleChangeloc = (value) => {
     setIsac(value);
+    // Setting selected state and const type codes
+    acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
+    pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
+
+    acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    setstateCodes(value ? acCodes : pcCodes);
   };
 
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
+    acTopojson = e.target.value == "Bihar" ? ac_bihar : ac_orissa;
+    pcTopojson = e.target.value == "Bihar" ? pc_bihar : pc_orissa;
+
+    acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
+      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
+      return result;
+    }, {});
+
+    setstateCodes(isac ? acCodes : pcCodes);
   };
 
   const handleToggleShowViz = (status) => {
