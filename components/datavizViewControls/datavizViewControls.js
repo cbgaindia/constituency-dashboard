@@ -116,28 +116,29 @@ const radioButtons = [
 
 const DatavizViewControls = (props) => (
   <div className="data-control">
-    <div style={{ display: "flex", gap: "1em" }}>
+    <div className="data-control__state">
       <Dropdown
         options={props.States}
-        heading="Select Year"
+        heading="Select State"
+        value={props.value}
         handleDropdownChange={props.handleStateChange}
       />
-      <div className="data-control__sabha">
-        <button
-          type="button"
-          aria-pressed={props.isac}
-          onClick={() => props.handleChangeloc(true)}
-        >
-          Vidhan sabha
-        </button>
-        <button
-          type="button"
-          aria-pressed={!props.isac}
-          onClick={() => props.handleChangeloc(false)}
-        >
-          Lok Sabha
-        </button>
-      </div>
+    </div>
+    <div className="data-control__sabha">
+      <button
+        type="button"
+        aria-pressed={props.isac}
+        onClick={() => props.handleChangeloc(true)}
+      >
+        Vidhan sabha
+      </button>
+      <button
+        type="button"
+        aria-pressed={!props.isac}
+        onClick={() => props.handleChangeloc(false)}
+      >
+        Lok Sabha
+      </button>
     </div>
     <fieldset className="scheme__controls">
       <legend className="screen-reader-text">Select Viz type: </legend>

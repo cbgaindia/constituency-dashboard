@@ -25,7 +25,6 @@ const Scheme = ({ scheme, related }) => {
   const [isac, setIsac] = useState(true);
   const States = Object.keys(scheme.ac.data.indicator_01.state_Obj);
   const [selectedState, setSelectedState] = useState(States[0]);
-  const [stateCodes, setstateCodes] = useState({});
 
   const router = useRouter();
 
@@ -40,29 +39,16 @@ const Scheme = ({ scheme, related }) => {
   let pcCodes = {};
   let acTopojson = {};
   let pcTopojson = {};
+  const ac_obj = { Bihar: ac_bihar, Odisha: ac_orissa };
+  const pc_obj = { Bihar: pc_bihar, Odisha: pc_orissa };
 
   // Setting selected state and const type codes
-  acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
-  pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
+  acTopojson = ac_obj[selectedState];
+  pcTopojson = pc_obj[selectedState];
 
   useEffect(() => {
-    // Setting selected state and const type codes
-    acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
-    pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
-
-    acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-      return result;
-    }, {});
-
-    pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-      return result;
-    }, {});
-
-    setstateCodes(isac ? acCodes : pcCodes);
-
     // Setting CurrentScheme Data
+    setSelectedState(router.query.state ?? States[0]);
 
     const indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
     indicatorKeys.map((indicator) => {
@@ -70,10 +56,6 @@ const Scheme = ({ scheme, related }) => {
         scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
     });
     currentScheme = isac ? scheme.ac : scheme.pc;
-    console.log(
-      "🚀 ~ file: [scheme].js ~ line 69 ~ useEffect ~ currentScheme",
-      currentScheme
-    );
 
     // Setting current indicator
 
@@ -92,10 +74,12 @@ const Scheme = ({ scheme, related }) => {
   };
   const handleChangeloc = (value) => {
     setIsac(value);
-    // Setting selected state and const type codes
-    acTopojson = selectedState == "Bihar" ? ac_bihar : ac_orissa;
-    pcTopojson = selectedState == "Bihar" ? pc_bihar : pc_orissa;
+  };
 
+  const getStateCodes = () => {
+    // Setting selected state and const type codes
+    acTopojson = ac_obj[selectedState];
+    pcTopojson = pc_obj[selectedState];
     acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
       result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
       return result;
@@ -106,25 +90,19 @@ const Scheme = ({ scheme, related }) => {
       return result;
     }, {});
 
-    setstateCodes(value ? acCodes : pcCodes);
+    return isac ? acCodes : pcCodes;
   };
 
   const handleStateChange = (e) => {
     setSelectedState(e.target.value);
-    acTopojson = e.target.value == "Bihar" ? ac_bihar : ac_orissa;
-    pcTopojson = e.target.value == "Bihar" ? pc_bihar : pc_orissa;
-
-    acCodes = acTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-      return result;
-    }, {});
-
-    pcCodes = pcTopojson.objects.Geo.geometries.reduce((result, geometry) => {
-      result[geometry.properties.GEO_NO] = geometry.properties.GEO_NAME;
-      return result;
-    }, {});
-
-    setstateCodes(isac ? acCodes : pcCodes);
+    router.push({
+      pathname: `/scheme/${router.query.scheme}`,
+      query: {
+        state: e.target.value,
+        indicator:
+          currentScheme.data[activeIndicator].slug ?? router.query.indicator,
+      },
+    });
   };
 
   const handleToggleShowViz = (status) => {
@@ -169,6 +147,7 @@ const Scheme = ({ scheme, related }) => {
           link.click();
         });
   };
+
   return (
     <>
       <div className="skiptarget">
@@ -190,6 +169,7 @@ const Scheme = ({ scheme, related }) => {
                   handleChangeloc={handleChangeloc}
                   isac={isac}
                   States={States}
+                  value={selectedState}
                   handleStateChange={handleStateChange}
                 />
                 {activeIndicator && (
@@ -197,6 +177,7 @@ const Scheme = ({ scheme, related }) => {
                     <IndicatorSelector
                       schemeData={currentScheme}
                       activeIndicator={activeIndicator}
+                      selectedState={selectedState}
                       currentSlug={router.query.scheme}
                     />
 
@@ -208,7 +189,7 @@ const Scheme = ({ scheme, related }) => {
                       schemeData={currentScheme}
                       activeIndicator={activeIndicator}
                       activeYear={activeYear}
-                      stateCodes={stateCodes}
+                      stateCodes={getStateCodes()}
                       setYearChange={setYearChange}
                       isac={isac}
                       selectedState={selectedState}

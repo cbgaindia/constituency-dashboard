@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Dropdown = (props) => (
   <>
@@ -9,6 +9,7 @@ const Dropdown = (props) => (
       id="custom_select"
       className="select-comp"
       onChange={props.handleDropdownChange}
+      value={props.value}
     >
       {props.options.map((option, index) => (
         <option key={`dropdown-${index}`}>{option}</option>

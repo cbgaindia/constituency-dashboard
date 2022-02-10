@@ -1,5 +1,5 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 const IndicatorRadioButton = (props) => (
   <>
@@ -9,7 +9,8 @@ const IndicatorRadioButton = (props) => (
         query: {
           indicator: props.indicatorData[props.indicatorName]
             ? props.indicatorData[props.indicatorName].slug
-            : '',
+            : "",
+          state: props.selectedState && props.selectedState,
         },
       }}
       scroll={false}

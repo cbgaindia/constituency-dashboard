@@ -32,6 +32,7 @@ const IndicatorSelector = (props) => {
                 key={index}
                 indicatorName={indicator}
                 schemeSlug={props.currentSlug}
+                selectedState={props.selectedState}
                 indicatorData={props.schemeData.data}
               />
             );

@@ -24,8 +24,8 @@ config.params = {
   center: [20.94, 84.8],
   zoomControl: false,
   zoom: 7,
-  maxZoom: 9,
-  minZoom: 3,
+  maxZoom: 6,
+  minZoom: 6,
   scrollwheel: false,
   legends: true,
   infoControl: true,
@@ -81,7 +81,6 @@ export default class Choropleth extends Component {
   }
 
   componentDidMount() {
-    console.log("This is choropleth state codes", this.props.stateCodes);
     const MappedFigures = this.mungeData();
     this.setState({ selectedFigure: MappedFigures });
     const defaultYear = this.getYearList(this.props.schemeData)[
@@ -96,11 +95,6 @@ export default class Choropleth extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(
-      "This is choropleth state codes did update",
-      prevProps.stateCodes
-    );
-
     if (prevProps.schemeData != this.props.schemeData) {
       const MappedFigures = this.mungeData();
       const yearList = this.getYearList(this.props.schemeData);
@@ -232,7 +226,6 @@ export default class Choropleth extends Component {
       ? JSON.parse(JSON.stringify(this.props.acTopojson))
       : JSON.parse(JSON.stringify(this.props.pcTopojson));
 
-    console.log("statecode", this.props.stateCodes);
     const newGeoJsonData = new topojson.feature(geoFile, geoFile.objects.Geo);
     let MappedFigures = new Array();
 
