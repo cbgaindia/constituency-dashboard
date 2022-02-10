@@ -118,9 +118,9 @@ const DatavizViewControls = (props) => (
   <div className="data-control">
     <div style={{ display: "flex", gap: "1em" }}>
       <Dropdown
-        options={["Odisha"]}
+        options={props.States}
         heading="Select Year"
-        handleDropdownChange={() => {}}
+        handleDropdownChange={props.handleStateChange}
       />
       <div className="data-control__sabha">
         <button

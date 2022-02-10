@@ -83,6 +83,8 @@ const SchemesDetailsView = (props) => {
                 schemeData={props.schemeData.data[props.activeIndicator]}
                 setYearChange={props.setYearChange}
                 isac={props.isac}
+                selectedState={props.selectedState}
+                key={props.selectedState}
               />
             ) : null}
             {props.showViz && props.activeViz === 'bar' ? (

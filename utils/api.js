@@ -99,9 +99,11 @@ export async function dataTransform(id) {
 
       // Tabular Data
       for (let i = 5; i < dataParse[0].length; i += 1) {
-        const fiscal_year = {};
+        let fiscal_year = {};
         const state_Obj = {};
         for (let j = 1; j < dataParse.length; j += 1) {
+          if (!(dataParse[j][0] in state_Obj)){
+              fiscal_year = {};};
           if (dataParse[j][4]) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],
@@ -161,9 +163,11 @@ export async function dataTransform(id) {
 
       // Tabular Data
       for (let i = 5; i < dataParse[0].length; i += 1) {
-        const fiscal_year = {};
+        let fiscal_year = {};
         const state_Obj = {};
         for (let j = 1; j < dataParse.length; j += 1) {
+          if (!(dataParse[j][0] in state_Obj)){
+              fiscal_year = {};};
           if (dataParse[j][4]) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],

@@ -5,6 +5,15 @@ import { MapContainer, TileLayer, FeatureGroup, GeoJSON } from "react-leaflet";
 import { acTopojson } from "public/assets/data/ac_orissa_topo";
 import { pcTopojson } from "public/assets/data/pc_orissa_topo";
 
+//import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
+//import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
+//import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
+//import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
+
+
+//const acTopojson = props.selectedState == "Bihar" ? ac_bihar : ac_orissa;
+//const pcTopojson = props.selectedState == "Bihar" ? pc_bihar : pc_orissa;
+
 // import { statesTopojson } from 'public/assets/data/IndiaStates'
 import "leaflet/dist/leaflet.css";
 import Dropdown from "components/dropdown/dropdown";
@@ -216,6 +225,7 @@ export default class Choropleth extends Component {
   mungeData() {
     const geoFile = this.props.isac ? acTopojson : pcTopojson;
 
+    console.log('statecode', this.props.stateCodes)
     const newGeoJsonData = new topojson.feature(geoFile, geoFile.objects.Geo);
     let MappedFigures = new Array();
 
