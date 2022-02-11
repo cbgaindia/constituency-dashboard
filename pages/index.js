@@ -7,17 +7,25 @@ import { fetchQuery } from "utils/api";
 import Dropdown from "components/dropdown/dropdown";
 
 export default function Home({ cardsData, statesData }) {
-  let states = [];
-  let schemesData = [];
+
+  let statesschemeData = {};
 
   statesData.map((state) => {
-    states.push(...state?.state.split(","));
-    schemesData.push(state["scheme-name"]);
+   
+    state['state'].split(",").map((each_state) => {
+       if (each_state in statesschemeData) {
+         statesschemeData[each_state].push({'scheme_name':state["scheme-name"], 'scheme_slug':state["slug"]});          
+	} 
+       else{
+         statesschemeData[each_state] = [{'scheme_name':state["scheme-name"], 'scheme_slug':state["slug"]}] ; 
+        }
+    });
+
   });
 
   const [schemes, setSchemes] = useState([]);
-  const [valueState, setValueState] = useState(states[0]);
-  const [schemeValue, setschemeValue] = useState(schemesData[0]);
+  const [valueState, setValueState] = useState(Object.keys(statesschemeData)[0]);
+  const [schemeValue, setschemeValue] = useState(statesschemeData[Object.keys(statesschemeData)[0]][0]['scheme_name']);
 
   const router = useRouter();
 
@@ -60,7 +68,7 @@ export default function Home({ cardsData, statesData }) {
       <main id="main" tabIndex="-1" className="wrapper home">
         <div style={{ display: "flex", gap: "1em" }}>
           <Dropdown
-            options={[...new Set(states)]}
+            options={Object.keys(statesschemeData)}
             heading="Select State"
             value={valueState}
             handleDropdownChange={(e) => {
@@ -68,7 +76,7 @@ export default function Home({ cardsData, statesData }) {
             }}
           />
           <Dropdown
-            options={schemesData}
+            options={statesschemeData[valueState].map((each) => {return each['scheme_name']})}
             heading="Select Scheme"
             value={schemeValue}
             handleDropdownChange={(e) => {
