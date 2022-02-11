@@ -28,10 +28,11 @@ const Scheme = ({ scheme, related }) => {
 
   const router = useRouter();
 
-  const indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
+  let indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
   indicatorKeys.map((indicator) => {
     scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
       scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+    return null;
   });
   let currentScheme = isac ? scheme.ac : scheme.pc;
 
@@ -50,10 +51,11 @@ const Scheme = ({ scheme, related }) => {
     // Setting CurrentScheme Data
     setSelectedState(router.query.state ?? States[0]);
 
-    const indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
+    indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
     indicatorKeys.map((indicator) => {
       scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
         scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+      return null;
     });
     currentScheme = isac ? scheme.ac : scheme.pc;
 
