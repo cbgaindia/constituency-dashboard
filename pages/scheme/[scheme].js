@@ -202,9 +202,9 @@ const Scheme = ({ scheme, related }) => {
                 )}
               </div>
 
-              {/* <SchemeNews newsData={news} />
+              {/* <SchemeNews newsData={news} /> */}
 
-              <RelatedSchemes related={related} /> */}
+              <RelatedSchemes related={related} /> 
             </>
           )}
         </div>
@@ -227,13 +227,13 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const scheme = await dataTransform(params.scheme);
-  // const related = await fetchRelated(
-  //   scheme.metadata.name,
-  //   scheme.metadata.type
-  // );
+  const related = await fetchRelated(
+     scheme.ac.metadata.name,
+     scheme.ac.metadata.type
+  );
   // const news = await fetchNews(params.scheme);
   return {
-    props: { scheme },
+    props: { scheme, related},
     revalidate: 1,
   };
 }
