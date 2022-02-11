@@ -1,11 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import Seo from 'components/seo/seo';
-import Card from 'components/card/card';
-import SchemesData from 'utils/schemesData';
-import { fetchQuery } from 'utils/api';
+import React, { useState, useEffect } from "react";
+import Seo from "components/seo/seo";
+import { useRouter } from "next/router";
+import Card from "components/card/card";
+import SchemesData from "utils/schemesData";
+import { fetchQuery } from "utils/api";
+import Dropdown from "components/dropdown/dropdown";
 
-export default function Home({ cardsData }) {
+export default function Home({ cardsData, statesData }) {
+  let states = [];
+  let schemesData = [];
+
+  statesData.map((state) => {
+    states.push(...state?.state.split(","));
+    schemesData.push(state["scheme-name"]);
+  });
+
   const [schemes, setSchemes] = useState([]);
+  const [valueState, setValueState] = useState(states[0]);
+  const [schemeValue, setschemeValue] = useState(schemesData[0]);
+
+  const router = useRouter();
+
+  const goToSchemeDashboard = () => {
+    const fetchLink = statesData.find((o) => {
+      return o["scheme-name"] == schemeValue;
+    });
+    router.push({
+      pathname: `/scheme/${fetchLink.slug}`,
+      query: {
+        state: valueState,
+      },
+    });
+  };
+
   useEffect(() => {
     const allSchemes = cardsData.map((scheme) => ({
       title: scheme.name,
@@ -19,9 +46,9 @@ export default function Home({ cardsData }) {
   }, []);
 
   const seo = {
-    url: 'https://schemes.openbudgetsindia.org/',
+    url: "https://schemes.openbudgetsindia.org/",
     description:
-      'Find downloadable data, visualisations and other useful information related to a number of schemes run by the Union and State Governments.',
+      "Find downloadable data, visualisations and other useful information related to a number of schemes run by the Union and State Governments.",
   };
 
   return (
@@ -31,6 +58,31 @@ export default function Home({ cardsData }) {
         <span id="maincontent">-</span>
       </div>
       <main id="main" tabIndex="-1" className="wrapper home">
+        <div style={{ display: "flex", gap: "1em" }}>
+          <Dropdown
+            options={[...new Set(states)]}
+            heading="Select State"
+            value={valueState}
+            handleDropdownChange={(e) => {
+              setValueState(e.target.value);
+            }}
+          />
+          <Dropdown
+            options={schemesData}
+            heading="Select Scheme"
+            value={schemeValue}
+            handleDropdownChange={(e) => {
+              setschemeValue(e.target.value);
+            }}
+          />
+          <button
+            className="details__download"
+            onClick={goToSchemeDashboard}
+            type="button"
+          >
+            Explore
+          </button>
+        </div>
         <ul className="home__cards">
           {schemes.length > 0 &&
             schemes.map((scheme, index) => (
@@ -45,12 +97,17 @@ export default function Home({ cardsData }) {
 }
 
 export async function getStaticProps() {
-  const data = await fetchQuery('schemeType', 'Centrally Sponsored Scheme');
+  const data = await fetchQuery("schemeType", "Centrally Sponsored Scheme");
   return {
     props: {
       cardsData: data.map((scheme) => ({
         slug: scheme.extras[2].value,
         name: scheme.extras[0].value,
+      })),
+      statesData: data.map((scheme) => ({
+        state: scheme.extras[3].value,
+        "scheme-name": scheme.extras[0].value,
+        slug: scheme.extras[2].value,
       })),
     },
     revalidate: 1,
