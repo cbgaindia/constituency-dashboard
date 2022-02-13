@@ -7,21 +7,23 @@ import { fetchQuery } from "utils/api";
 import Dropdown from "components/dropdown/dropdown";
 
 export default function Home({ cardsData, statesData }) {
-  let statesschemeData = {};
+  const statesschemeData = {};
 
   statesData.map((state) => {
-    state["state"].split(",").map((each_state) => {
+    state.state.split(",").map((each_state) => {
       if (each_state in statesschemeData) {
         statesschemeData[each_state].push({
-          scheme_name: state["scheme-name"],
-          scheme_slug: state["slug"],
+          scheme_name: state.scheme_name,
+          scheme_slug: state.slug,
         });
       } else {
         statesschemeData[each_state] = [
-          { scheme_name: state["scheme-name"], scheme_slug: state["slug"] },
+          { scheme_name: state.scheme_name, scheme_slug: state.slug },
         ];
       }
+      return null;
     });
+    return null;
   });
 
   const [schemes, setSchemes] = useState([]);
@@ -29,15 +31,13 @@ export default function Home({ cardsData, statesData }) {
     Object.keys(statesschemeData)[0]
   );
   const [schemeValue, setschemeValue] = useState(
-    statesschemeData[Object.keys(statesschemeData)[0]][0]["scheme_name"]
+    statesschemeData[Object.keys(statesschemeData)[0]][0].scheme_name
   );
 
   const router = useRouter();
 
   const goToSchemeDashboard = () => {
-    const fetchLink = statesData.find((o) => {
-      return o["scheme-name"] == schemeValue;
-    });
+    const fetchLink = statesData.find((o) => (o.scheme_name == schemeValue))
     router.push({
       pathname: `/scheme/${fetchLink.slug}`,
       query: {
@@ -83,14 +83,12 @@ export default function Home({ cardsData, statesData }) {
             handleDropdownChange={(e) => {
               setValueState(e.target.value);
               setschemeValue(
-                statesschemeData[e.target.value][0]["scheme_name"]
+                statesschemeData[e.target.value][0].scheme_name
               );
             }}
           />
           <Dropdown
-            options={statesschemeData[valueState].map((each) => {
-              return each["scheme_name"];
-            })}
+            options={statesschemeData[valueState].map((each) => (each.scheme_name))}
             heading="Select Scheme"
             value={schemeValue}
             handleDropdownChange={(e) => {
@@ -130,7 +128,7 @@ export async function getStaticProps() {
       })),
       statesData: data.map((scheme) => ({
         state: scheme.extras[3].value,
-        "scheme-name": scheme.extras[0].value,
+        "scheme_name": scheme.extras[0].value,
         slug: scheme.extras[2].value,
       })),
     },
