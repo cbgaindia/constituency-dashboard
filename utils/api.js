@@ -108,8 +108,7 @@ export async function dataTransform(id) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],
               [dataParse[j][3]]:
-                Math.round((dataParse[j][i] + Number.EPSILON) * 100) / 100 ||
-                "",
+                Number.isNaN(parseFloat(dataParse[j][i])) ? "" : parseFloat(dataParse[j][i]).toFixed(2),
             };
           }
           state_Obj[dataParse[j][0]] = { ...fiscal_year };
@@ -172,8 +171,7 @@ export async function dataTransform(id) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],
               [dataParse[j][3]]:
-                Math.round((dataParse[j][i] + Number.EPSILON) * 100) / 100 ||
-                "",
+                Number.isNaN(parseFloat(dataParse[j][i])) ? "" : parseFloat(dataParse[j][i]).toFixed(2),
             };
           }
           state_Obj[dataParse[j][0]] = { ...fiscal_year };

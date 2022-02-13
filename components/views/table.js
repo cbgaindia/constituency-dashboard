@@ -3,7 +3,6 @@ import React from "react";
 const Table = (props) => {
   const financialYears = Object.keys(props.schemeData.fiscal_year).reverse();
   const indicatorName = props.schemeData.name;
-  console.log("State code from table", props.stateCodes);
   return (
     <div className="table-wrapper">
       <table className="scheme-table">

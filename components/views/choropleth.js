@@ -20,7 +20,7 @@ import { sortList } from "utils/helpers";
 
 const config = {};
 
-const center_obj = {"Bihar":[25.09, 85.31], "Odisha":[20.95, 85.09]};
+const center_obj = {"Bihar":[25.09, 85.31], "Odisha":[20.95, 85.09], "Maharashtra":[19.75, 75.71], "Jharkhand":[23.61, 85.27], "Chhattisgarh":[21.27, 81.86], "Uttar Pradesh":[26.84, 80.94]};
 
 config.params = {
   zoomControl: false,
