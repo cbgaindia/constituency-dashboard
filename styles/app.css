@@ -1359,6 +1359,7 @@ button {
 
 .scheme__related {
   margin-bottom: 3rem;
+  margin-top: 3rem;
 }
 .scheme__related .related__header {
   display: flex;

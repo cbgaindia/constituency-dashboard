@@ -20,12 +20,13 @@ import { sortList } from "utils/helpers";
 
 const config = {};
 
+const center_obj = {"Bihar":[25.09, 85.31], "Odisha":[20.95, 85.09]};
+
 config.params = {
-  center: [20.94, 84.8],
   zoomControl: false,
   zoom: 7,
-  maxZoom: 6,
-  minZoom: 6,
+  maxZoom: 7,
+  minZoom: 4,
   scrollwheel: false,
   legends: true,
   infoControl: true,
@@ -222,7 +223,7 @@ export default class Choropleth extends Component {
   }
 
   mungeData() {
-    const geoFile = this.props.isac
+     const geoFile = this.props.isac
       ? JSON.parse(JSON.stringify(this.props.acTopojson))
       : JSON.parse(JSON.stringify(this.props.pcTopojson));
 
@@ -361,7 +362,7 @@ export default class Choropleth extends Component {
     return (
       <div className="vis-wrapper">
         <MapContainer
-          center={config.params.center}
+          center={center_obj[this.props.selectedState]}
           zoom={config.params.zoom}
           zoomControl={config.params.zoomControl}
           dragging={config.params.dragging}

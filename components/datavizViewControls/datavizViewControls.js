@@ -37,7 +37,7 @@ const radioButtons = [
         />
       </svg>
     ),
-    title: "Compare States",
+    title: "Compare Constituencies",
     val: "bar",
     class: "mr-3",
   },

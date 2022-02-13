@@ -143,7 +143,7 @@ class GraphComponent extends React.Component {
       }));
     return (
       <div className="scheme-compare">
-        <label htmlFor="selectInput">Select States</label>
+        <label htmlFor="selectInput">Select Constituencies</label>
         <Select
           inputId="selectInput"
           isMulti
@@ -225,7 +225,7 @@ class GraphComponent extends React.Component {
             </div>
           ) : (
             <div className="compare__placeholder">
-              <p>Select states to generate Visualization</p>
+              <p>Select constituencies to generate Visualization</p>
             </div>
           )}
         </div>
