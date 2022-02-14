@@ -20,7 +20,7 @@ import { sortList } from "utils/helpers";
 
 const config = {};
 
-const center_obj = {"Bihar":[25.09, 85.31], "Odisha":[20.95, 85.09], "Maharashtra":[19.75, 75.71], "Jharkhand":[23.61, 85.27], "Chhattisgarh":[21.27, 81.86], "Uttar Pradesh":[26.84, 80.94]};
+const center_obj = {"Bihar":[25.09, 85.31], "Odisha":[20.95, 85.09], "Maharashtra":[20.95, 85.09], "Jharkhand":[23.61, 85.27], "Chhattisgarh":[21.27, 81.86], "Uttar Pradesh":[26.84, 80.94]};
 
 config.params = {
   zoomControl: false,
@@ -223,6 +223,10 @@ export default class Choropleth extends Component {
   }
 
   mungeData() {
+     console.log(this.props.acTopojson)
+     console.log(this.props.selectedState)
+     console.log(this.props.schemeData)
+     console.log(this.props.stateCodes)
      const geoFile = this.props.isac
       ? JSON.parse(JSON.stringify(this.props.acTopojson))
       : JSON.parse(JSON.stringify(this.props.pcTopojson));
