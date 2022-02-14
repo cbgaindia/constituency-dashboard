@@ -14,10 +14,15 @@ import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
 import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
 import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
 import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
-import ac_jharkhand  from "public/assets/data/jharkhand_AC.json";
-import pc_jharkhand  from "public/assets/data/Jharkhand_PC.json";
-import ac_maharashtra  from "public/assets/data/maharashtra_ac.json";
-import pc_maharashtra  from "public/assets/data/Maharashtra_PC.json";
+import ac_jharkhand from "public/assets/data/jharkhand_AC.json";
+import pc_jharkhand from "public/assets/data/Jharkhand_PC.json";
+import ac_maharashtra from "public/assets/data/maharashtra_ac.json";
+import pc_maharashtra from "public/assets/data/Maharashtra_PC.json";
+
+import ac_chattisgarh from "public/assets/data/Chhattisgarh_AC.json";
+import pc_chattisgarh from "public/assets/data/Chhattisgarh_PC.json";
+import ac_uttarpradesh from "public/assets/data/Uttarpradesh_AC.json";
+import pc_uttarpradesh from "public/assets/data/Uttarpradesh_PC.json";
 
 const Scheme = ({ scheme, related }) => {
   const [showViz, setShowViz] = useState(true);
@@ -44,8 +49,22 @@ const Scheme = ({ scheme, related }) => {
   let pcCodes = {};
   let acTopojson = {};
   let pcTopojson = {};
-  const ac_obj = { Bihar: ac_bihar, Odisha: ac_orissa, Jharkhand: ac_jharkhand, Maharashtra: ac_maharashtra };
-  const pc_obj = { Bihar: pc_bihar, Odisha: pc_orissa, Jharkhand: pc_jharkhand, Maharashtra: pc_maharashtra };
+  const ac_obj = {
+    Bihar: ac_bihar,
+    Odisha: ac_orissa,
+    Jharkhand: ac_jharkhand,
+    Maharashtra: ac_maharashtra,
+    Chattisgarh: ac_chattisgarh,
+    "Uttar Pradesh": ac_uttarpradesh,
+  };
+  const pc_obj = {
+    Bihar: pc_bihar,
+    Odisha: pc_orissa,
+    Jharkhand: pc_jharkhand,
+    Maharashtra: pc_maharashtra,
+    Chattisgarh: pc_chattisgarh,
+    "Uttar Pradesh": pc_uttarpradesh,
+  };
 
   // Setting selected state and const type codes
   acTopojson = ac_obj[selectedState];
@@ -208,7 +227,7 @@ const Scheme = ({ scheme, related }) => {
 
               {/* <SchemeNews newsData={news} /> */}
 
-              <RelatedSchemes related={related} /> 
+              <RelatedSchemes related={related} />
             </>
           )}
         </div>
@@ -232,12 +251,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const scheme = await dataTransform(params.scheme);
   const related = await fetchRelated(
-     scheme.ac.metadata.name,
-     scheme.ac.metadata.type
+    scheme.ac.metadata.name,
+    scheme.ac.metadata.type
   );
   // const news = await fetchNews(params.scheme);
   return {
-    props: { scheme, related},
+    props: { scheme, related },
     revalidate: 1,
   };
 }
