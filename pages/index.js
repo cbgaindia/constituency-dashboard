@@ -71,37 +71,39 @@ export default function Home({ cardsData, statesData }) {
         <span id="maincontent">-</span>
       </div>
       <div className="headercontent">
-        <h1>
-          Explore the Scheme Expenditure in your State focusing on
-          Constituencies
-        </h1>
-        <div className="headercontent__actionitems">
-          <Dropdown
-            options={Object.keys(statesschemeData)}
-            heading="Select State"
-            value={valueState}
-            handleDropdownChange={(e) => {
-              setValueState(e.target.value);
-              setschemeValue(
-                statesschemeData[e.target.value][0].scheme_name
-              );
-            }}
-          />
-          <Dropdown
-            options={statesschemeData[valueState].map((each) => (each.scheme_name))}
-            heading="Select Scheme"
-            value={schemeValue}
-            handleDropdownChange={(e) => {
-              setschemeValue(e.target.value);
-            }}
-          />
-          <button
-            className="details__download"
-            onClick={goToSchemeDashboard}
-            type="button"
-          >
-            Explore
-          </button>
+        <div className="wrapper">
+          <h1>
+            Explore the Scheme Expenditure in your State focusing on
+            Constituencies
+          </h1>
+          <div className="headercontent__actionitems">
+            <Dropdown
+              options={Object.keys(statesschemeData)}
+              heading="Select State"
+              value={valueState}
+              handleDropdownChange={(e) => {
+                setValueState(e.target.value);
+                setschemeValue(
+                  statesschemeData[e.target.value][0].scheme_name
+                );
+              }}
+            />
+            <Dropdown
+              options={statesschemeData[valueState].map((each) => (each.scheme_name))}
+              heading="Select Scheme"
+              value={schemeValue}
+              handleDropdownChange={(e) => {
+                setschemeValue(e.target.value);
+              }}
+            />
+            <button
+              className="details__download"
+              onClick={goToSchemeDashboard}
+              type="button"
+            >
+              Explore
+            </button>
+          </div>
         </div>
       </div>
       <main id="main" tabIndex="-1" className="wrapper home">
