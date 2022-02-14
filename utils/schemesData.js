@@ -19,6 +19,7 @@ import sg from 'public/Images/schemesLogos/sg.jpg';
 import ms from 'public/Images/schemesLogos/ms.jpg';
 import scs from 'public/Images/schemesLogos/scs.jpg';
 import sts from 'public/Images/schemesLogos/sts.jpg';
+import pmkisan from 'public/Images/schemesLogos/pmkisan.jpg';
 
 const SchemesData = {
   jjm: {
@@ -86,6 +87,9 @@ const SchemesData = {
   },
   sts: {
     logo: sts,
+  },
+  pmkisan: {
+    logo: pmkisan,
   },
 };
 
