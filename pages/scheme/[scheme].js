@@ -54,7 +54,7 @@ const Scheme = ({ scheme, related }) => {
     Odisha: ac_orissa,
     Jharkhand: ac_jharkhand,
     Maharashtra: ac_maharashtra,
-    Chattisgarh: ac_chattisgarh,
+    Chhattisgarh: ac_chattisgarh,
     "Uttar Pradesh": ac_uttarpradesh,
   };
   const pc_obj = {
@@ -62,7 +62,7 @@ const Scheme = ({ scheme, related }) => {
     Odisha: pc_orissa,
     Jharkhand: pc_jharkhand,
     Maharashtra: pc_maharashtra,
-    Chattisgarh: pc_chattisgarh,
+    Chhattisgarh: pc_chattisgarh,
     "Uttar Pradesh": pc_uttarpradesh,
   };
 
