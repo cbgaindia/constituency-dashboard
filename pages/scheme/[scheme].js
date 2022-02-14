@@ -14,10 +14,10 @@ import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
 import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
 import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
 import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
-import { acTopojson as ac_jharkhand } from "public/assets/data/ac_jharkhand_topo";
-import { pcTopojson as pc_jharkhand } from "public/assets/data/pc_jharkhand_topo";
-import { acTopojson as ac_maharashtra } from "public/assets/data/ac_maharashtra_topo";
-import { pcTopojson as pc_maharashtra } from "public/assets/data/pc_maharashtra_topo";
+import ac_jharkhand  from "public/assets/data/jharkhand_AC.json";
+import pc_jharkhand  from "public/assets/data/Jharkhand_PC.json";
+import ac_maharashtra  from "public/assets/data/maharashtra_ac.json";
+import pc_maharashtra  from "public/assets/data/Maharashtra_PC.json";
 
 const Scheme = ({ scheme, related }) => {
   const [showViz, setShowViz] = useState(true);
