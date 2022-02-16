@@ -157,7 +157,13 @@ export default function Home({ cardsData, statesData }) {
           {cardStates.length > 0 &&
             showStates &&
             cardStates.map((state, index) => (
-              <div onClick={() => getSchemes(state.title)} key={index}>
+              <div
+                role="button"
+                onKeyDown={() => getSchemes(state.title)}
+                onClick={() => getSchemes(state.title)}
+                key={index}
+                tabIndex={index}
+              >
                 <Card scheme={state} />
               </div>
             ))}
