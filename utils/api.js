@@ -1,5 +1,5 @@
-import { read, utils as xlsxUtil } from "xlsx";
-import SchemesData from "utils/schemesData";
+import { read, utils as xlsxUtil } from 'xlsx';
+import SchemesData from 'utils/schemesData';
 
 export async function fetchAPI(path) {
   const response = await fetch(
@@ -11,8 +11,8 @@ export async function fetchAPI(path) {
 
 export function generateSlug(slug) {
   if (slug) {
-    const temp = slug.toLowerCase().replace(/\W/g, "-"); // lower case and replace space & special chars witn '-'
-    return temp.replace(/-+/g, "-").replace(/-$/, ""); // remove multiple '-' and remove '-' from end of string
+    const temp = slug.toLowerCase().replace(/\W/g, '-'); // lower case and replace space & special chars witn '-'
+    return temp.replace(/-+/g, '-').replace(/-$/, ''); // remove multiple '-' and remove '-' from end of string
   }
   return null;
 }
@@ -29,12 +29,12 @@ export async function fetchSheets(link) {
   const result = [];
   await fetch(link)
     .then((res) => {
-      if (!res.ok) throw new Error("fetch failed");
+      if (!res.ok) throw new Error('fetch failed');
       return res.arrayBuffer();
     })
     .then((ab) => {
       const file = new Uint8Array(ab);
-      const workbook = read(file, { type: "array" });
+      const workbook = read(file, { type: 'array' });
 
       workbook.SheetNames.forEach((bookName) => {
         const data = workbook.Sheets[bookName];
@@ -59,15 +59,15 @@ export async function dataTransform(id) {
   let slug;
   let acUrl;
   let pcUrl;
-  await fetchQuery("slug", id).then((data) => {
+  await fetchQuery('slug', id).then((data) => {
     data[0].resources.forEach((file) => {
-      if (file.url.includes("pc.xlsx")) pcUrl = file.url;
-      else if (file.url.includes("ac.xlsx")) acUrl = file.url;
+      if (file.name.includes('pc.xlsx')) pcUrl = file.url;
+      else if (file.name.includes('ac.xlsx')) acUrl = file.url;
     });
 
     name = data[0].extras[0].value;
     type = data[0].extras[1].value;
-    slug = data[0].name || "";
+    slug = data[0].name || '';
   });
 
   if (acUrl) {
@@ -85,14 +85,13 @@ export async function dataTransform(id) {
           };
         }
       });
-
       obj.ac.metadata = {
-        description: metaObj["scheme-description"] || "",
-        name: name || "",
-        frequency: metaObj.frequency || "",
-        source: metaObj["data-source"] || "",
-        type: type || "",
-        note: metaObj["note:"] || "",
+        description: metaObj['scheme-description'] || '',
+        name: name || '',
+        frequency: metaObj.frequency || '',
+        source: metaObj['data-source'] || '',
+        type: type || '',
+        note: metaObj['note:'] || '',
         slug,
         indicators: [],
       };
@@ -102,19 +101,21 @@ export async function dataTransform(id) {
         let fiscal_year = {};
         const state_Obj = {};
         for (let j = 1; j < dataParse.length; j += 1) {
-          if (!(dataParse[j][0] in state_Obj)){
-              fiscal_year = {};};
+          if (!(dataParse[j][0] in state_Obj)) {
+            fiscal_year = {};
+          }
           if (dataParse[j][4]) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],
-              [dataParse[j][3]]:
-                Number.isNaN(parseFloat(dataParse[j][i])) ? "" : parseFloat(dataParse[j][i]).toFixed(2),
+              [dataParse[j][3]]: Number.isNaN(parseFloat(dataParse[j][i]))
+                ? ''
+                : parseFloat(dataParse[j][i]).toFixed(2),
             };
           }
           state_Obj[dataParse[j][0]] = { ...fiscal_year };
         }
         const indicatorSlug =
-          generateSlug(metaObj[`indicator-${i - 4}-name`]) || "";
+          generateSlug(metaObj[`indicator-${i - 4}-name`]) || '';
 
         obj.ac.metadata.indicators.push(indicatorSlug);
 
@@ -122,11 +123,11 @@ export async function dataTransform(id) {
           ...obj.ac.data,
           [`indicator_0${i - 4}`]: {
             state_Obj,
-            name: metaObj[`indicator-${i - 4}-name`] || "",
-            description: metaObj[`indicator-${i - 4}-description`] || "",
-            note: metaObj[`indicator-${i - 4}-note`] || "",
+            name: metaObj[`indicator-${i - 4}-name`] || '',
+            description: metaObj[`indicator-${i - 4}-description`] || '',
+            note: metaObj[`indicator-${i - 4}-note`] || '',
             slug: indicatorSlug,
-            unit: metaObj[`indicator-${i - 4}-unit`] || "",
+            unit: metaObj[`indicator-${i - 4}-unit`] || '',
           },
         };
       }
@@ -150,12 +151,12 @@ export async function dataTransform(id) {
       });
 
       obj.pc.metadata = {
-        description: metaObj["scheme-description"] || "",
-        name: name || "",
-        frequency: metaObj.frequency || "",
-        source: metaObj["data-source"] || "",
-        type: type || "",
-        note: metaObj["note:"] || "",
+        description: metaObj['scheme-description'] || '',
+        name: name || '',
+        frequency: metaObj.frequency || '',
+        source: metaObj['data-source'] || '',
+        type: type || '',
+        note: metaObj['note:'] || '',
         slug,
         indicators: [],
       };
@@ -165,20 +166,22 @@ export async function dataTransform(id) {
         let fiscal_year = {};
         const state_Obj = {};
         for (let j = 1; j < dataParse.length; j += 1) {
-          if (!(dataParse[j][0] in state_Obj)){
-              fiscal_year = {};};
+          if (!(dataParse[j][0] in state_Obj)) {
+            fiscal_year = {};
+          }
           if (dataParse[j][4]) {
             fiscal_year[dataParse[j][4].trim()] = {
               ...fiscal_year[dataParse[j][4].trim()],
-              [dataParse[j][3]]:
-                Number.isNaN(parseFloat(dataParse[j][i])) ? "" : parseFloat(dataParse[j][i]).toFixed(2),
+              [dataParse[j][3]]: Number.isNaN(parseFloat(dataParse[j][i]))
+                ? ''
+                : parseFloat(dataParse[j][i]).toFixed(2),
             };
           }
           state_Obj[dataParse[j][0]] = { ...fiscal_year };
         }
 
         const indicatorSlug =
-          generateSlug(metaObj[`indicator-${i - 4}-name`]) || "";
+          generateSlug(metaObj[`indicator-${i - 4}-name`]) || '';
 
         obj.pc.metadata.indicators.push(indicatorSlug);
 
@@ -186,24 +189,23 @@ export async function dataTransform(id) {
           ...obj.pc.data,
           [`indicator_0${i - 4}`]: {
             state_Obj,
-            name: metaObj[`indicator-${i - 4}-name`] || "",
-            description: metaObj[`indicator-${i - 4}-description`] || "",
-            note: metaObj[`indicator-${i - 4}-note`] || "",
+            name: metaObj[`indicator-${i - 4}-name`] || '',
+            description: metaObj[`indicator-${i - 4}-description`] || '',
+            note: metaObj[`indicator-${i - 4}-note`] || '',
             slug: indicatorSlug,
-            unit: metaObj[`indicator-${i - 4}-unit`] || "",
+            unit: metaObj[`indicator-${i - 4}-unit`] || '',
           },
         };
       }
     });
   }
-
   return obj;
 }
 
 export async function fetchNews(query) {
   const result = {};
   let link;
-  await fetchQuery("schemeType", "news").then((newsLink) => {
+  await fetchQuery('schemeType', 'news').then((newsLink) => {
     link = newsLink[0].resources[0].url;
   });
   await fetchSheets(link).then((res) => {
@@ -212,12 +214,12 @@ export async function fetchNews(query) {
     allNews.forEach((news, index) => {
       if (!index == 0) {
         const resultArr = {
-          title: news[2] || "",
-          text: news[3] || "",
-          img: news[4] || "",
-          accessed_on: news[5] || "",
-          class: news[6] || "",
-          link: news[7] || "",
+          title: news[2] || '',
+          text: news[3] || '',
+          img: news[4] || '',
+          accessed_on: news[5] || '',
+          class: news[6] || '',
+          link: news[7] || '',
         };
 
         if (result[news[0]]) {
@@ -245,16 +247,16 @@ export async function fetchNews(query) {
 
 export async function fetchRelated(name, type) {
   const otherSchemes = [];
-  await fetchQuery("schemeType", type).then((res) => {
+  await fetchQuery('schemeType', type).then((res) => {
     const similar = res
       .filter((scheme) => scheme.extras[0].value != name)
       .splice(0, 4);
 
     similar.forEach((scheme) => {
       otherSchemes.push({
-        title: scheme.extras[0].value || "Scheme Name not defined",
-        link: `/scheme/${scheme.extras[2].value || "#"}`,
-        icon: SchemesData[scheme.extras[2].value].logo || "",
+        title: scheme.extras[0].value || 'Scheme Name not defined',
+        link: `/scheme/${scheme.extras[2].value || '#'}`,
+        icon: SchemesData[scheme.extras[2].value].logo || '',
       });
     });
   });

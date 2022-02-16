@@ -15,30 +15,29 @@
     gap: 1rem;
     padding-left: 0;
 
-    @include respond-to("lt-desktop") {
+    @include respond-to('lt-desktop') {
       grid-template-columns: repeat(3, 1fr);
     }
 
-    @include respond-to("lt-tablet") {
+    @include respond-to('lt-tablet') {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 }
 
 .headercontent {
-  background: "#ADD8E6";
+  background: '#ADD8E6';
   padding: 3em;
 
   h1 {
     word-break: break-word;
-    width: 90%;
     text-align: center;
     margin: auto;
   }
 
   &__actionitems {
-    display: "flex";
-    gap: "1em";
+    display: 'flex';
+    gap: '1em';
     padding: 1em;
   }
 

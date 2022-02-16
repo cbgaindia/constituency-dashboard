@@ -21,6 +21,13 @@ import scs from 'public/Images/schemesLogos/scs.jpg';
 import sts from 'public/Images/schemesLogos/sts.jpg';
 import pmkisan from 'public/Images/schemesLogos/pmkisan.jpg';
 
+import up from 'public/Images/stateLogos/Uttar Pradesh.png';
+import bihar from 'public/Images/stateLogos/Bihar.png';
+import maharashtra from 'public/Images/stateLogos/Maharashtra.png';
+import chattisgarh from 'public/Images/stateLogos/Chhattisgarh.png';
+import odisha from 'public/Images/stateLogos/Odisha.png';
+import jharkhand from 'public/Images/stateLogos/Jharkhand.png';
+
 const SchemesData = {
   jjm: {
     logo: jjm,
@@ -90,6 +97,24 @@ const SchemesData = {
   },
   pmkisan: {
     logo: pmkisan,
+  },
+  Bihar: {
+    logo: bihar,
+  },
+  Odisha: {
+    logo: odisha,
+  },
+  Jharkhand: {
+    logo: jharkhand,
+  },
+  Chhattisgarh: {
+    logo: chattisgarh,
+  },
+  Maharashtra: {
+    logo: maharashtra,
+  },
+  'Uttar Pradesh': {
+    logo: up,
   },
 };
 

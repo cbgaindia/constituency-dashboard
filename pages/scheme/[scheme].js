@@ -1,34 +1,34 @@
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import Seo from "components/seo/seo";
-import { dataTransform, fetchRelated, fetchNews, fetchQuery } from "utils/api";
-import { export_table_to_csv } from "utils/download-table";
-import SchemeIntroduction from "components/schemeIntroduction/schemeIntroduction";
-import domtoimage from "dom-to-image";
-import DatavizViewControls from "components/datavizViewControls/datavizViewControls";
-import IndicatorSelector from "components/indicatorSelector/indicatorSelector";
-import SchemeDetailsView from "components/schemeDetailsView/schemeDetailsView";
-import RelatedSchemes from "components/relatedSchemes/relatedSchemes";
-import SchemeNews from "components/schemeNews/schemeNews";
-import { acTopojson as ac_orissa } from "public/assets/data/ac_orissa_topo";
-import { pcTopojson as pc_orissa } from "public/assets/data/pc_orissa_topo";
-import { acTopojson as ac_bihar } from "public/assets/data/ac_bihar_topo";
-import { pcTopojson as pc_bihar } from "public/assets/data/pc_bihar_topo";
-import ac_jharkhand from "public/assets/data/jharkhand_AC.json";
-import pc_jharkhand from "public/assets/data/Jharkhand_PC.json";
-import ac_maharashtra from "public/assets/data/maharashtra_ac.json";
-import pc_maharashtra from "public/assets/data/Maharashtra_PC.json";
+import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Seo from 'components/seo/seo';
+import { dataTransform, fetchRelated, fetchNews, fetchQuery } from 'utils/api';
+import { export_table_to_csv } from 'utils/download-table';
+import SchemeIntroduction from 'components/schemeIntroduction/schemeIntroduction';
+import domtoimage from 'dom-to-image';
+import DatavizViewControls from 'components/datavizViewControls/datavizViewControls';
+import IndicatorSelector from 'components/indicatorSelector/indicatorSelector';
+import SchemeDetailsView from 'components/schemeDetailsView/schemeDetailsView';
+import RelatedSchemes from 'components/relatedSchemes/relatedSchemes';
+import SchemeNews from 'components/schemeNews/schemeNews';
+import { acTopojson as ac_orissa } from 'public/assets/data/ac_orissa_topo';
+import { pcTopojson as pc_orissa } from 'public/assets/data/pc_orissa_topo';
+import { acTopojson as ac_bihar } from 'public/assets/data/ac_bihar_topo';
+import { pcTopojson as pc_bihar } from 'public/assets/data/pc_bihar_topo';
+import ac_jharkhand from 'public/assets/data/jharkhand_AC.json';
+import pc_jharkhand from 'public/assets/data/Jharkhand_PC.json';
+import ac_maharashtra from 'public/assets/data/maharashtra_ac.json';
+import pc_maharashtra from 'public/assets/data/Maharashtra_PC.json';
 
-import ac_chattisgarh from "public/assets/data/Chhattisgarh_AC.json";
-import pc_chattisgarh from "public/assets/data/Chhattisgarh_PC.json";
-import ac_uttarpradesh from "public/assets/data/Uttarpradesh_AC.json";
-import pc_uttarpradesh from "public/assets/data/Uttarpradesh_PC.json";
+import ac_chattisgarh from 'public/assets/data/Chhattisgarh_AC.json';
+import pc_chattisgarh from 'public/assets/data/Chhattisgarh_PC.json';
+import ac_uttarpradesh from 'public/assets/data/Uttarpradesh_AC.json';
+import pc_uttarpradesh from 'public/assets/data/Uttarpradesh_PC.json';
 
 const Scheme = ({ scheme, related }) => {
   const [showViz, setShowViz] = useState(true);
-  const [activeViz, setActiveViz] = useState("map");
-  const [activeIndicator, setActiveIndicator] = useState("");
-  const [activeYear, setActiveYear] = useState("2019-20");
+  const [activeViz, setActiveViz] = useState('map');
+  const [activeIndicator, setActiveIndicator] = useState('');
+  const [activeYear, setActiveYear] = useState('2019-20');
   const [loading, setLoading] = useState(true);
 
   const [isac, setIsac] = useState(true);
@@ -39,8 +39,8 @@ const Scheme = ({ scheme, related }) => {
 
   let indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
   indicatorKeys.map((indicator) => {
-    scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
-      scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+    scheme[isac ? 'ac' : 'pc'].data[indicator].fiscal_year =
+      scheme[isac ? 'ac' : 'pc'].data[indicator].state_Obj[selectedState];
     return null;
   });
   let currentScheme = isac ? scheme.ac : scheme.pc;
@@ -55,7 +55,7 @@ const Scheme = ({ scheme, related }) => {
     Jharkhand: ac_jharkhand,
     Maharashtra: ac_maharashtra,
     Chhattisgarh: ac_chattisgarh,
-    "Uttar Pradesh": ac_uttarpradesh,
+    'Uttar Pradesh': ac_uttarpradesh,
   };
   const pc_obj = {
     Bihar: pc_bihar,
@@ -63,7 +63,7 @@ const Scheme = ({ scheme, related }) => {
     Jharkhand: pc_jharkhand,
     Maharashtra: pc_maharashtra,
     Chhattisgarh: pc_chattisgarh,
-    "Uttar Pradesh": pc_uttarpradesh,
+    'Uttar Pradesh': pc_uttarpradesh,
   };
 
   // Setting selected state and const type codes
@@ -76,8 +76,8 @@ const Scheme = ({ scheme, related }) => {
 
     indicatorKeys = Object.keys(isac ? scheme.ac.data : scheme.pc.data);
     indicatorKeys.map((indicator) => {
-      scheme[isac ? "ac" : "pc"].data[indicator].fiscal_year =
-        scheme[isac ? "ac" : "pc"].data[indicator].state_Obj[selectedState];
+      scheme[isac ? 'ac' : 'pc'].data[indicator].fiscal_year =
+        scheme[isac ? 'ac' : 'pc'].data[indicator].state_Obj[selectedState];
       return null;
     });
     currentScheme = isac ? scheme.ac : scheme.pc;
@@ -88,7 +88,7 @@ const Scheme = ({ scheme, related }) => {
       (indicator) =>
         currentScheme.data[indicator].slug === router.query.indicator
     );
-    if (currentIndicator === undefined) currentIndicator = "indicator_01";
+    if (currentIndicator === undefined) currentIndicator = 'indicator_01';
     setActiveIndicator(currentIndicator);
     setLoading(false);
   }, [router, selectedState, isac]);
@@ -145,13 +145,13 @@ const Scheme = ({ scheme, related }) => {
   const filterElements = (node) => {
     try {
       return (
-        node.getAttribute("id") !== "hide-this-button" &&
-        node.getAttribute("class") !== "statetooltip" &&
-        node.getAttribute("class") !== "tcontainer" &&
-        node.getAttribute("class") !== "select-container" &&
-        node.getAttribute("class") !== "details__download" &&
+        node.getAttribute('id') !== 'hide-this-button' &&
+        node.getAttribute('class') !== 'statetooltip' &&
+        node.getAttribute('class') !== 'tcontainer' &&
+        node.getAttribute('class') !== 'select-container' &&
+        node.getAttribute('class') !== 'details__download' &&
         node.nodeType != 8 &&
-        node.getAttribute("class") != "see-details-text"
+        node.getAttribute('class') != 'see-details-text'
       );
     } catch (err) {
       return true;
@@ -159,15 +159,15 @@ const Scheme = ({ scheme, related }) => {
   };
 
   const handleDownloadReportImage = () => {
-    if (activeViz === "table") export_table_to_csv("table.csv");
+    if (activeViz === 'table') export_table_to_csv('table.csv');
     else
       domtoimage
-        .toPng(document.getElementById("report-container"), {
+        .toPng(document.getElementById('report-container'), {
           filter: filterElements,
         })
         .then((dataURL) => {
-          const link = document.createElement("a");
-          link.download = "Visualization Report.png";
+          const link = document.createElement('a');
+          link.download = 'Visualization Report.png';
           link.href = dataURL;
           link.click();
         });
@@ -237,7 +237,7 @@ const Scheme = ({ scheme, related }) => {
 };
 
 export async function getStaticPaths() {
-  const data = await fetchQuery("schemeType", "Centrally Sponsored Scheme");
+  const data = await fetchQuery('schemeType', 'Centrally Sponsored Scheme');
   return {
     paths: data.map((scheme) => ({
       params: {
