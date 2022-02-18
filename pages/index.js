@@ -162,7 +162,7 @@ export default function Home({ cardsData, statesData }) {
                 onKeyDown={() => getSchemes(state.title)}
                 onClick={() => getSchemes(state.title)}
                 key={index}
-                tabIndex={index}
+                tabIndex={0}
               >
                 <Card scheme={state} />
               </div>
