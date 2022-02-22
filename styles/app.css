@@ -476,7 +476,7 @@ button {
 .headercontent h1 {
   word-break: break-word;
   text-align: center;
-  margin: auto;
+  margin: 0 auto 1rem;
 }
 
 .headercontent__actionitems {
@@ -917,6 +917,10 @@ button {
   width: max-content;
   grid-column: 2/3;
   margin-top: 1.5rem;
+}
+
+.resources_button {
+  margin: 0 0 0 auto;
 }
 
 @media (max-width: 768px) {

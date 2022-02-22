@@ -98,10 +98,7 @@ export default function Home({ cardsData, statesData }) {
       </div>
       <div className="headercontent">
         <div className="wrapper">
-          <h1>
-            Explore the Scheme Expenditure in your State focusing on
-            Constituencies
-          </h1>
+          <h1>Explore Constituency-wise Fiscal Information for Schemes</h1>
           <div className="headercontent__actionitems">
             <Dropdown
               options={Object.keys(statesschemeData)}

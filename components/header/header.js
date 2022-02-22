@@ -30,6 +30,21 @@ const Header = () => (
           />
         </a>
       </section>
+      <button
+        className="details__download resources_button"
+        onClick={() =>
+          window.open(
+            'https://github.com/cbgaindia/constituency-dashboard-geolisting-and-area-approximation',
+            '_blank'
+          ) ||
+          window.location.replace(
+            'https://github.com/cbgaindia/constituency-dashboard-geolisting-and-area-approximation'
+          )
+        }
+        type="button"
+      >
+        Methodology and Resources
+      </button>
       {/* {!searchPage && (
         <Link href="/search">
           <a className="header__search">
