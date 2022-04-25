@@ -34,11 +34,11 @@ const Header = () => (
         className="details__download resources_button"
         onClick={() =>
           window.open(
-            'https://github.com/cbgaindia/constituency-dashboard-geolisting-and-area-approximation',
+            'https://drive.google.com/drive/folders/1_Qm_yDHBlcSTvoYdV0bc9b79DRF-pzJs?usp=sharing',
             '_blank'
           ) ||
           window.location.replace(
-            'https://github.com/cbgaindia/constituency-dashboard-geolisting-and-area-approximation'
+            'https://drive.google.com/drive/folders/1_Qm_yDHBlcSTvoYdV0bc9b79DRF-pzJs?usp=sharing'
           )
         }
         type="button"
