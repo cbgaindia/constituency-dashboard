@@ -19,6 +19,7 @@ import sg from 'public/Images/schemesLogos/sg.jpg';
 import ms from 'public/Images/schemesLogos/ms.jpg';
 import scs from 'public/Images/schemesLogos/scs.jpg';
 import sts from 'public/Images/schemesLogos/sts.jpg';
+import nsap from 'public/Images/schemesLogos/sts.jpg';
 import pmkisan from 'public/Images/schemesLogos/pmkisan.jpg';
 
 import up from 'public/Images/stateLogos/Uttar Pradesh.png';
@@ -97,6 +98,9 @@ const SchemesData = {
   },
   pmkisan: {
     logo: pmkisan,
+  },
+  nsap: {
+    logo: nsap,
   },
   Bihar: {
     logo: bihar,
