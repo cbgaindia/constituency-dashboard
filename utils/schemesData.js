@@ -19,7 +19,9 @@ import sg from 'public/Images/schemesLogos/sg.jpg';
 import ms from 'public/Images/schemesLogos/ms.jpg';
 import scs from 'public/Images/schemesLogos/scs.jpg';
 import sts from 'public/Images/schemesLogos/sts.jpg';
-import nsap from 'public/Images/schemesLogos/sts.jpg';
+import nsap from 'public/Images/schemesLogos/NSAP.png';
+import sbmg from 'public/Images/schemesLogos/SBMG.png';
+import pmmvy from 'public/Images/schemesLogos/PMMVY.png';
 import pmkisan from 'public/Images/schemesLogos/pmkisan.jpg';
 
 import up from 'public/Images/stateLogos/Uttar Pradesh.png';
@@ -101,6 +103,12 @@ const SchemesData = {
   },
   nsap: {
     logo: nsap,
+  },
+  sbmg: {
+    logo: sbmg,
+  },
+  pmmvy: {
+    logo: pmmvy,
   },
   Bihar: {
     logo: bihar,
