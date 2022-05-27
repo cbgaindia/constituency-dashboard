@@ -3,7 +3,7 @@ import SchemesData from 'utils/schemesData';
 
 export async function fetchAPI(path) {
   const response = await fetch(
-    `http://3.109.56.211/api/3/action/package_show?id=${path}`
+    `https://ckan.civicdatalab.in/api/3/action/package_show?id=${path}`
   );
   const data = await response.json();
   return data;
@@ -19,7 +19,7 @@ export function generateSlug(slug) {
 
 export async function fetchQuery(query, value) {
   const queryRes = await fetch(
-    `http://3.109.56.211/api/3/action/package_search?fq=${query}:"${value}"+organization:constituency-wise-scheme-data&rows=50`
+    `https://ckan.civicdatalab.in/api/3/action/package_search?fq=${query}:"${value}" AND organization:constituency-wise-scheme-data&rows=50`
   ).then((res) => res.json());
 
   return queryRes.result.results;
